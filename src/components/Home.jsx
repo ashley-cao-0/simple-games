@@ -24,9 +24,9 @@ function Home() {
       img: 'memory.jpg',
     },
     {
-      route: '/game',
-      description: 'WIP game',
-      img: '/blank.jpg',
+      route: '/hangman',
+      description: 'Let\'s play hangman',
+      img: '/hangman.jpg',
     },
   ]
   return (

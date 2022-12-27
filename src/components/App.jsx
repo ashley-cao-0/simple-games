@@ -8,6 +8,7 @@ import TypingTest from './TypingTest'
 import Game from './Game'
 import Snake from './Snake'
 import MemoryTest from './MemoryTest'
+import Hangman from './Hangman'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path='/game' element={<Game />}/>
       <Route path='/snake' element={<Snake />}/>
       <Route path='/memory' element={<MemoryTest />}/>
+      <Route path='/hangman' element={<Hangman />}/>
     </Routes>
     </div>
   )
