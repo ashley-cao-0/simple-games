@@ -79,7 +79,7 @@ function MathTest() {
 
         </div> 
         : 
-        <FinishScreen score={count}/>
+        <FinishScreen score={count} game="mathtest"/>
     
   )
 }

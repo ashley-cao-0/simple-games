@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { saveAnonymousScore, saveScore, getTopScores } from "../index"
 import { useNavigate } from "react-router-dom";
 
-function FinishScreen({score}) {
+function FinishScreen({score, game}) {
   const navigate = useNavigate()
   const [scoreId, setScoreId] = useState(0)
   const [showSaveForm, setShowSaveForm] = useState(false)
@@ -20,13 +20,13 @@ function FinishScreen({score}) {
     const name = e.target.name.value
     if (name) {
       await saveScore(name, scoreId)
-      navigate('/leaderboard')
+      navigate('/'+game+'/leaderboard')
     }
   }
 
   useEffect(()=>{
     const scoreSetup = async() => {
-      const id = await saveAnonymousScore(score)
+      const id = await saveAnonymousScore(score, game)
       setScoreId(id)
       const topScores = await getTopScores()
       // const findScoreResult = topScores.find(topScore => topScore.score < score)

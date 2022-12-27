@@ -40,12 +40,12 @@ export const getTopScores = async () => {
 }
 
 //add new anonymous score
-export const saveAnonymousScore = async (score) => {
+export const saveAnonymousScore = async (score, game) => {
   try {
     const newScoreRef = await addDoc(scoresRef, {
       name: 'anonymous',
       score: score,
-      game: "mathtest",
+      game: game,
       createdAt: serverTimestamp() 
     })
     return newScoreRef.id
