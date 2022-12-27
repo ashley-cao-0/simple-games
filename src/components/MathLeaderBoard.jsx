@@ -21,7 +21,7 @@ function LeaderBoard() {
           <th>Name</th>
           <th>Score</th>
         </tr>
-      {scores.map((score,index) =>
+      {scores?.map((score,index) =>
         <tr key={score.id} className=" bg-purple-400 pt-10">
           <td>{index+1}</td>
           <td>{score.name}</td>

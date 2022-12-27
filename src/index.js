@@ -22,7 +22,7 @@ const scoresRef = collection(db, 'scores')
 
 //get collection data
 export const getTopScores = async () => {
-  const q = query(scoresRef, orderBy("score", "desc"), orderBy("createdAt", 'asc'))
+  const q = query(scoresRef, where("game", "==", "mathtest"), orderBy("score", "desc"), orderBy("createdAt", 'asc'))
   try {
     const snapshot = await getDocs(q)
     let scores = []
@@ -45,6 +45,7 @@ export const saveAnonymousScore = async (score) => {
     const newScoreRef = await addDoc(scoresRef, {
       name: 'anonymous',
       score: score,
+      game: "mathtest",
       createdAt: serverTimestamp() 
     })
     return newScoreRef.id
