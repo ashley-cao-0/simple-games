@@ -61,3 +61,17 @@ export const saveScore = async (newName, id) => {
     name: newName
   })
 }
+
+export const saveSnakeScore = async (name, score) => {
+  try {
+    const newScoreRef = await addDoc(scoresRef, {
+      name: name,
+      score: score,
+      game: 'snake',
+      createdAt: serverTimestamp() 
+    })
+    return newScoreRef.id
+  } catch (error) {
+    console.log(error.message);
+  }
+}
