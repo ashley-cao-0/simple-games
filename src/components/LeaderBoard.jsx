@@ -31,7 +31,7 @@ function LeaderBoard() {
         )} 
         </tbody>
       </table>
-      <button className=" mt-5 border"><Link to="/mathtest">Play again</Link></button>
+      <button className=" mt-5 border"><Link to={"/" + game }>Play again</Link></button>
     </div>
   )
 }
