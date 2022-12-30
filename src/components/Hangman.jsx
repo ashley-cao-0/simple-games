@@ -2,9 +2,10 @@ import React from "react";
 
 function Hangman() {
   return (
-    <>
-      <h1> Hangman </h1>
-    </>
+    <div className=" mt-24 text-center ">
+      <h1 className="text-5xl mb-10"> Hangman </h1>
+      
+    </div>
   )
 }
 
