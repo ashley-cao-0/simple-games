@@ -1,6 +1,6 @@
 
 import React, {useEffect, useState, useRef} from "react";
-import { saveSnakeScore } from '../index'
+import SaveSnakeScore from "./SaveSnakeScore";
 
 function Snake() {
   const rowNum = 20
@@ -223,21 +223,8 @@ function Snake() {
   }, [snake])
   
   //save score with player's name
-  const [name, setName] = useState('')
   const handleClick = () => {
     setWantToSave(true)
-  }
-
-  const handleChange = (e) => {
-    setName(e.target.value)
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const score = snake?.length - 1
-    await saveSnakeScore(name, score)
-    setWantToSave(false)
-    restart()
   }
   
   return (
@@ -285,12 +272,8 @@ function Snake() {
         {/********  Save score form ********/}  
         {gameOver && !wantToSave && <button onClick={handleClick} className=" bg-slate-300 text-xl px-4 py-2"> Save score </button>}
         {wantToSave &&
-          <form>
-            <label> Your name: </label>
-            <input type="text" onChange={handleChange}/>
-            <button onClick={handleSubmit}> Submit </button>
-          </form>
-          }
+          <SaveSnakeScore score = {snake?.length - 1} />
+        }
       </div>
 
     </div>
