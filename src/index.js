@@ -21,8 +21,8 @@ const db = getFirestore()
 const scoresRef = collection(db, 'scores')
 
 //get collection data
-export const getTopScores = async () => {
-  const q = query(scoresRef, where("game", "==", "mathtest"), orderBy("score", "desc"), orderBy("createdAt", 'asc'))
+export const getTopScores = async (game) => {
+  const q = query(scoresRef, where("game", "==", game), orderBy("score", "desc"), orderBy("createdAt", 'asc'))
   try {
     const snapshot = await getDocs(q)
     let scores = []

@@ -1,12 +1,13 @@
 import React, {useState,useEffect} from "react";
 import { getTopScores } from "../index"
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 
 function LeaderBoard() {
+  const { game } = useParams()
   const [scores, setScores] = useState([])
   useEffect(() => {
     const showScore = async () => {
-      const data = await getTopScores()
+      const data = await getTopScores(game)
       setScores(data)
     }
     showScore()
