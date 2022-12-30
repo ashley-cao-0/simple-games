@@ -32,7 +32,6 @@ function Snake() {
   const [myInterval, setMyInterval] = useState(0)
   const [running, setRunning] = useState(false)
   const [gameOver, setGameOver] = useState(false)
-  const [wantToSave, setWantToSave] = useState(false)
 
   const ref = useRef(null)
 
@@ -222,11 +221,6 @@ function Snake() {
     }
   }, [snake])
   
-  //save score with player's name
-  const handleClick = () => {
-    setWantToSave(true)
-  }
-  
   return (
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 text-slate-800">
       <div className=" mt-24 text-center ">
@@ -270,10 +264,7 @@ function Snake() {
         </div>
 
         {/********  Save score form ********/}  
-        {gameOver && !wantToSave && <button onClick={handleClick} className=" bg-slate-300 text-xl px-4 py-2"> Save score </button>}
-        {wantToSave &&
-          <SaveSnakeScore score = {snake?.length - 1} />
-        }
+        {gameOver && <SaveSnakeScore score={snake?.length - 1}/>}
       </div>
 
     </div>
