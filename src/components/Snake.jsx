@@ -1,5 +1,6 @@
 
 import React, {useEffect, useState, useRef} from "react";
+import SaveSnakeScore from "./SaveSnakeScore";
 
 function Snake() {
   const rowNum = 20
@@ -31,6 +32,7 @@ function Snake() {
   const [myInterval, setMyInterval] = useState(0)
   const [running, setRunning] = useState(false)
   const [gameOver, setGameOver] = useState(false)
+  const [wantToSave, setWantToSave] = useState(false)
 
   const ref = useRef(null)
 
@@ -218,14 +220,18 @@ function Snake() {
     if (snake){
       setGrid(makeGrid())
     }
-  },[snake])
-
+  }, [snake])
+  
+  //save score with player's name
+  const handleClick = () => {
+    setWantToSave(true)
+  }
   
   return (
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 text-slate-800">
       <div className=" mt-24 text-center ">
         <h1 className=" text-5xl mb-10"> SNAKE! </h1>
-        <h2 className=" mb-3 text-2xl">Score: {snake?.length - 1}</h2>
+        <h2 className=" mb-3 mx-3 text-2xl inline-block">Score: {snake?.length - 1}</h2>
         
         <div className=" flex flex-col items-center relative ">
 
@@ -259,9 +265,15 @@ function Snake() {
                 :
                 <p> Press any arrow key to start </p>
               } 
-            </> 
+            </>
+          }
+        </div>
+
+        {/********  Save score form ********/}  
+        {gameOver && !wantToSave && <button onClick={handleClick} className=" bg-slate-300 text-xl px-4 py-2"> Save score </button>}
+        {wantToSave &&
+          <SaveSnakeScore score = {snake?.length - 1} />
         }
-        </div>    
       </div>
 
     </div>

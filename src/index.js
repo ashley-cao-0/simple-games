@@ -21,8 +21,8 @@ const db = getFirestore()
 const scoresRef = collection(db, 'scores')
 
 //get collection data
-export const getTopScores = async () => {
-  const q = query(scoresRef, where("game", "==", "mathtest"), orderBy("score", "desc"), orderBy("createdAt", 'asc'))
+export const getTopScores = async (game) => {
+  const q = query(scoresRef, where("game", "==", game), orderBy("score", "desc"), orderBy("createdAt", 'asc'))
   try {
     const snapshot = await getDocs(q)
     let scores = []
@@ -60,4 +60,18 @@ export const saveScore = async (newName, id) => {
   await updateDoc(scoreRef, {
     name: newName
   })
+}
+
+export const saveSnakeScore = async (name, score) => {
+  try {
+    const newScoreRef = await addDoc(scoresRef, {
+      name: name,
+      score: score,
+      game: 'snake',
+      createdAt: serverTimestamp() 
+    })
+    return newScoreRef.id
+  } catch (error) {
+    console.log(error.message);
+  }
 }

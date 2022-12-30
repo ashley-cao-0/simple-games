@@ -20,7 +20,7 @@ function FinishScreen({score, game}) {
     const name = e.target.name.value
     if (name) {
       await saveScore(name, scoreId)
-      navigate('/'+game+'/leaderboard')
+      navigate('/leaderboard/'+ game )
     }
   }
 
