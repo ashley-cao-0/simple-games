@@ -3,7 +3,7 @@ import { getTopScores } from "../index"
 import {Link, useParams} from 'react-router-dom'
 
 function LeaderBoard() {
-  const itemNumPerPage = 5
+  const itemNumPerPage = 10
   const activePageStyle = {backgroundColor: "gray"}
 
   const { game } = useParams()
@@ -60,7 +60,10 @@ function LeaderBoard() {
 
   return (
     <div className=" bg-white w-4/6 mx-auto mt-24 text-center p-5">
-      <h2>Leader Board</h2>
+      <h2>
+        {game === 'snake' ? <span> Snake </span> : <span> Math Speed </span>}
+        Leader Board
+      </h2>
 
       {/****  Table ******/}
       <table className=" bg-purple-100 mx-auto w-full">
