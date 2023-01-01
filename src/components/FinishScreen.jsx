@@ -28,11 +28,11 @@ function FinishScreen({score, game}) {
     const scoreSetup = async() => {
       const id = await saveAnonymousScore(score, game)
       setScoreId(id)
-      const topScores = await getTopScores()
+      const topScores = await getTopScores('mathtest')
       // const findScoreResult = topScores.find(topScore => topScore.score < score)
       const lowestTopScore = topScores[49]
       const beatLowestTopScore = score > lowestTopScore
-      setIsHighScore(Boolean(beatLowestTopScore || topScores.length < 50))
+      setIsHighScore(Boolean((beatLowestTopScore || topScores.length < 50) && score !== 0))
     }
     scoreSetup()
   },[])
