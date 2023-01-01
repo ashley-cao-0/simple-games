@@ -98,7 +98,7 @@ function LeaderBoard() {
         <button onClick={ toNextPage } className = " ml-2 px-1 rounded bg-slate-200"> {'>'} </button>
       </p>
 
-      <button className=" mt-5 border"><Link to={"/" + game }>Play again</Link></button>
+      <button className=" mt-5 border"><Link to={"/" + game }> Back to game </Link></button>
     </div>
   )
 }
