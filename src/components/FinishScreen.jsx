@@ -30,9 +30,9 @@ function FinishScreen({score, game}) {
       setScoreId(id)
       const topScores = await getTopScores()
       // const findScoreResult = topScores.find(topScore => topScore.score < score)
-      const lowestTopScore = topScores[19]
+      const lowestTopScore = topScores[49]
       const beatLowestTopScore = score > lowestTopScore
-      setIsHighScore(Boolean(beatLowestTopScore || topScores.length < 20))
+      setIsHighScore(Boolean(beatLowestTopScore || topScores.length < 50))
     }
     scoreSetup()
   },[])

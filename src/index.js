@@ -30,8 +30,8 @@ export const getTopScores = async (game) => {
       scores.push({...doc.data(), id: doc.id})
     })
     scores = scores.filter(score => score.name !== 'anonymous')
-    if (scores.length > 20) {
-      scores = scores.slice (0, 20)
+    if (scores.length > 50) {
+      scores = scores.slice (0, 50)
     }
     return scores
   } catch (error) {
