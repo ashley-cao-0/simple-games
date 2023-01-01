@@ -4,9 +4,10 @@ import {Link, useParams} from 'react-router-dom'
 
 function LeaderBoard() {
   const itemNumPerPage = 5
-  // const activePageStyle = {backgroundColor: "gray"}
+  const activePageStyle = {backgroundColor: "gray"}
 
   const { game } = useParams()
+  
   const [scores, setScores] = useState([])
   const [pageIndex, setPageIndex] = useState(0)
 
@@ -20,7 +21,16 @@ function LeaderBoard() {
     const pageNum = Math.round(scores.length / itemNumPerPage)
     const result = []
     for (let i = 0; i < pageNum; i++) {
-      result.push(i+1)
+      if (i === pageIndex) {
+        result.push(
+          {
+            pageNumber: i + 1,
+            style: {backgroundColor: "pink"}
+          }
+        )
+      } else {
+        result.push({ pageNumber: i + 1 })
+      }
     }
     return result
   }
@@ -61,7 +71,7 @@ function LeaderBoard() {
       {/* Page number */}
       <p> 
         {getPageList().map(page =>
-          <button onClick={() => { setPageIndex(page - 1) }} key={page} className=" mx-2"> {page} </button>
+          <button onClick={() => {setPageIndex(page.pageNumber - 1)}} style = {page.style} key={page.pageNumber} className=" mx-2"> {page.pageNumber} </button>
         )}
       </p>
 
