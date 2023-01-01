@@ -44,7 +44,20 @@ function LeaderBoard() {
       setScores(scoreArr)
     }
     showScore()
-  },[])
+  }, [])
+  
+  const toPreviousPage = () => {
+    if (pageIndex > 0) {
+      setPageIndex(pageIndex - 1)
+    }
+  }
+
+  const toNextPage = () => {
+    if (pageIndex < getPageList().length - 1 ) {
+      setPageIndex(pageIndex + 1)
+    }
+  }
+
   return (
     <div className=" bg-white w-4/6 mx-auto mt-24 text-center p-5">
       <h2>Leader Board</h2>
@@ -68,11 +81,18 @@ function LeaderBoard() {
         </tbody>
       </table>
       
-      {/* Page number */}
-      <p> 
+      {/* Page numbers */}
+      <p className=" mt-4">
+        {/* previous page button*/}
+        <button onClick={ toPreviousPage } className = " mr-2 px-1 rounded bg-slate-200"> {'<'} </button>
+
+        {/* page list */}
         {getPageList().map(page =>
-          <button onClick={() => {setPageIndex(page.pageNumber - 1)}} style = {page.style} key={page.pageNumber} className=" mx-2"> {page.pageNumber} </button>
+          <button onClick={() => {setPageIndex(page.pageNumber - 1)}} style = {page.style} className = " px-1 mx-1" key={page.pageNumber}> {page.pageNumber} </button>
         )}
+
+        {/* next page button */}
+        <button onClick={ toNextPage } className = " ml-2 px-1 rounded bg-slate-200"> {'>'} </button>
       </p>
 
       <button className=" mt-5 border"><Link to={"/" + game }>Play again</Link></button>
