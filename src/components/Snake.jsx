@@ -1,5 +1,6 @@
 
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import SaveSnakeScore from "./SaveSnakeScore";
 
 function Snake() {
@@ -222,52 +223,56 @@ function Snake() {
   }, [snake])
   
   return (
-    <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 text-slate-800">
-      <div className=" mt-24 text-center ">
-        <h1 className=" text-5xl mb-10"> SNAKE! </h1>
-        <h2 className=" mb-3 mx-3 text-2xl inline-block">Score: {snake?.length - 1}</h2>
-        
-        <div className=" flex flex-col items-center relative ">
+    <>
+      <Link to="/leaderboard/snake" className='absolute z-50 py-3 px-5 m-4 ml-32 text-2xl bg-slate-300 hover:bg-slate-400 duration-150'> Leader board </Link>
+      
+      <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 text-slate-800">
+        <div className=" mt-24 text-center ">
+          <h1 className=" text-5xl mb-10"> SNAKE! </h1>
+          <h2 className=" mb-3 mx-3 text-2xl inline-block">Score: {snake?.length - 1}</h2>
+          
+          <div className=" flex flex-col items-center relative ">
 
-        {gameOver && 
-          <div className=" absolute h-full z-10 flex items-center">
-            <div className="">
-              <h1 className=" text-4xl">GAME OVER!</h1>
-              <h2 className=" text-lg mt-2"> Press Enter to restart </h2>
+          {gameOver && 
+            <div className=" absolute h-full z-10 flex items-center">
+              <div className="">
+                <h1 className=" text-4xl">GAME OVER!</h1>
+                <h2 className=" text-lg mt-2"> Press Enter to restart </h2>
+              </div>
+            </div>
+          }
+
+          {/********  Game play area ********/}
+            <div className="  border-8 border-slate-700 flex flex-col ">
+              {grid.map((row,i)=>
+                <div key={i} className="flex">
+                  {row.map((item, i)=>{
+                    return <div key={i} className=" w-4 h-4 border-0" style={item}></div>}
+                    )}
+                </div>)
+              }
             </div>
           </div>
-        }
 
-        {/********  Game play area ********/}
-          <div className="  border-8 border-slate-700 flex flex-col ">
-            {grid.map((row,i)=>
-              <div key={i} className="flex">
-                {row.map((item, i)=>{
-                  return <div key={i} className=" w-4 h-4 border-0" style={item}></div>}
-                  )}
-              </div>)
+          {/********  Game instruction ********/}
+          <div className=" mt-5 text-xl">
+            {!gameOver && 
+              <>
+                {running  ?
+                  <p> Press spacebar to pause </p>
+                  :
+                  <p> Press any arrow key to start </p>
+                } 
+              </>
             }
           </div>
+
+          {/********  Save score form ********/}  
+          {gameOver && <SaveSnakeScore score={snake?.length - 1}/>}
         </div>
 
-        {/********  Game instruction ********/}
-        <div className=" mt-5 text-xl">
-          {!gameOver && 
-            <>
-              {running  ?
-                <p> Press spacebar to pause </p>
-                :
-                <p> Press any arrow key to start </p>
-              } 
-            </>
-          }
-        </div>
-
-        {/********  Save score form ********/}  
-        {gameOver && <SaveSnakeScore score={snake?.length - 1}/>}
       </div>
-
-    </div>
+    </>
   )
 }
 
