@@ -21,8 +21,8 @@ const db = getFirestore()
 const scoresRef = collection(db, 'scores')
 
 //get collection data
-export const getTopScores = async () => {
-  const q = query(scoresRef, where("game", "==", "mathtest"), orderBy("score", "desc"), orderBy("createdAt", 'asc'))
+export const getTopScores = async (game) => {
+  const q = query(scoresRef, where("game", "==", game), orderBy("score", "desc"), orderBy("createdAt", 'asc'))
   try {
     const snapshot = await getDocs(q)
     let scores = []
@@ -30,8 +30,8 @@ export const getTopScores = async () => {
       scores.push({...doc.data(), id: doc.id})
     })
     scores = scores.filter(score => score.name !== 'anonymous')
-    if (scores.length > 20) {
-      scores = scores.slice (0, 20)
+    if (scores.length > 50) {
+      scores = scores.slice (0, 50)
     }
     return scores
   } catch (error) {

@@ -3,7 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom'
 import '../index.css'
 import MathTest from './MathTest'
 import Home from './Home'
-import MathLeaderBoard from './MathLeaderBoard'
+import LeaderBoard from './LeaderBoard'
 import TypingTest from './TypingTest'
 import Game from './Game'
 import Snake from './Snake'
@@ -17,7 +17,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/mathtest' element={<MathTest/>}/>
-      <Route path='/mathtest/leaderboard' element={<MathLeaderBoard />}/>
+      <Route path='/leaderboard/:game' element={<LeaderBoard />}/>
       <Route path='/typingtest' element={<TypingTest />}/>
       <Route path='/game' element={<Game />}/>
       <Route path='/snake' element={<Snake />}/>
