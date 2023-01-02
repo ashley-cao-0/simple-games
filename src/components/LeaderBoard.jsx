@@ -1,12 +1,14 @@
 import React, {useState,useEffect} from "react";
 import { getTopScores } from "../index"
-import {Link, useParams} from 'react-router-dom'
+import {Link, useParams, useSearchParams} from 'react-router-dom'
 
 function LeaderBoard() {
   const itemNumPerPage = 10
-  const activePageStyle = {backgroundColor: "gray"}
+  const activePageStyle = {backgroundColor: "pink"}
 
   const { game } = useParams()
+  const [searchParams] = useSearchParams()
+  const scoreId = searchParams.get('scoreId')
   
   const [scores, setScores] = useState([])
   const [pageIndex, setPageIndex] = useState(0)
@@ -25,7 +27,7 @@ function LeaderBoard() {
         result.push(
           {
             pageNumber: i + 1,
-            style: {backgroundColor: "pink"}
+            style: activePageStyle
           }
         )
       } else {
@@ -39,6 +41,7 @@ function LeaderBoard() {
     const showScore = async () => {
       const data = await getTopScores(game)
       const scoreArr = data.map((score, index) => {
+        // if (score.)
         return {...score, rank: index + 1}
       })
       setScores(scoreArr)
@@ -74,8 +77,8 @@ function LeaderBoard() {
           <th>Score</th>
         </tr>
       {/* {scores?.map((score,index) => */}
-      {getScorePage().map((score,index) =>
-        <tr key={score.id} className=" bg-purple-400 pt-10">
+      {getScorePage().map(score =>
+        <tr key={score.id} className=" bg-purple-400 pt-10" style = {score.style}>
           <td>{score.rank}</td>
           <td>{score.name}</td>
           <td>{score.score}</td>

@@ -19,8 +19,8 @@ function SaveSnakeScore({score}) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     e.target.disabled = true
-    await saveSnakeScore(name, score)
-    navigate('/leaderboard/snake')
+    const scoreId = await saveSnakeScore(name, score)
+    navigate('/leaderboard/snake?scoreId=' + scoreId)
   }
 
   useEffect(() => {
