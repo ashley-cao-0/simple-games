@@ -3,8 +3,9 @@ import { getTopScores } from "../index"
 import {Link, useParams, useSearchParams} from 'react-router-dom'
 
 function LeaderBoard() {
-  const itemNumPerPage = 10
-  const activePageStyle = {backgroundColor: "pink"}
+  const itemPerPage = 5
+  const activePageStyle = { backgroundColor: "pink" }
+  const userScoreStyle = { backgroundColor: "pink" }
 
   const { game } = useParams()
   const [searchParams] = useSearchParams()
@@ -14,13 +15,13 @@ function LeaderBoard() {
   const [pageIndex, setPageIndex] = useState(0)
 
   const getScorePage = () => {
-    const startingIndex = itemNumPerPage*pageIndex
-    const page = scores.slice(startingIndex, startingIndex + itemNumPerPage)
+    const startingIndex = itemPerPage*pageIndex
+    const page = scores.slice(startingIndex, startingIndex + itemPerPage)
     return page
   }
 
   const getPageList = () => {
-    const pageNum = Math.round(scores.length / itemNumPerPage)
+    const pageNum = Math.round(scores.length / itemPerPage)
     const result = []
     for (let i = 0; i < pageNum; i++) {
       if (i === pageIndex) {
@@ -37,29 +38,36 @@ function LeaderBoard() {
     return result
   }
 
-  useEffect(() => {
-    const showScore = async () => {
-      const data = await getTopScores(game)
-      const scoreArr = data.map((score, index) => {
-        // if (score.)
-        return {...score, rank: index + 1}
-      })
-      setScores(scoreArr)
-    }
-    showScore()
-  }, [])
   
   const toPreviousPage = () => {
     if (pageIndex > 0) {
       setPageIndex(pageIndex - 1)
     }
   }
-
+  
   const toNextPage = () => {
     if (pageIndex < getPageList().length - 1 ) {
       setPageIndex(pageIndex + 1)
     }
   }
+  
+  useEffect(() => {
+    const showScore = async () => {
+      let playerIndex = 0
+      const data = await getTopScores(game)
+      const scoreArr = data.map((score, index) => {
+        if (score.id === scoreId) {
+          playerIndex = index
+          return {...score, rank: index + 1, style: userScoreStyle}
+        } else {
+          return {...score, rank: index + 1}
+        }
+      })
+      setScores(scoreArr)
+      setPageIndex(Math.floor(playerIndex/itemPerPage))
+    }
+    showScore()
+  }, [])
 
   return (
     <div className=" bg-white w-4/6 mx-auto mt-24 text-center p-5">
@@ -69,7 +77,7 @@ function LeaderBoard() {
       </h2>
 
       {/****  Table ******/}
-      <table className=" bg-purple-100 mx-auto w-full">
+      <table className=" mx-auto w-full">
         <tbody>    
         <tr className=" bg-purple-800">
           <th>Rank</th>
