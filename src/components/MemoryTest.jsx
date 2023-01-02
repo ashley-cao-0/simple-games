@@ -153,7 +153,7 @@ const MemoryTest = () => {
 
   return ( 
     <>
-    <div className=" mt-24 flex flex-col items-center ">
+    <div className=" mt-20 flex flex-col items-center py-5">
       {/* <h2 className=" text-xl mb-2"> Level {digitNum - 2} - {digitNum} digits </h2> */}
       {/* <div className=" text-lg mb-5">
         Number of digits:
@@ -161,7 +161,7 @@ const MemoryTest = () => {
           digitButtons.map(button => <button key={button.digit} onClick={() => {changeLevel(button.digit)}} style= {button.style} className= " bg-slate-200 text-gray-700 px-3 py-1 mx-1 text-xl hover:bg-gray-500 hover:text-white"> {button.digit} </button>)
         }
       </div> */}
-      <h2> Trials: {trials} </h2>
+      <p className=" mb-5"> Click on the numbers in order from 1 to 9 </p>
       <div className=" bg-zinc-700 p-1 mb-6">
         {grid.map((row, iRow) =>
           <div key={iRow} className="flex">
@@ -176,6 +176,7 @@ const MemoryTest = () => {
           <div className=" w-96 border border-zinc-700 p-2 pl-6">
             <h2 className=" font-bold text-center"> Result </h2>
             <ul className=" list-disc ">
+              <li> Trials: { trials } </li>
               <li> Your average time taken to start: {Math.round(waitTime/trials/1000)}s </li>
               <li> Your average accuracy: {Math.round(numCorrect/(trials*9)*100)}% </li>
               <li className=" font-semibold mb-4"> You are currently {accuracyVsChimp(numCorrect, trials)} times less accurate, and {speedVsChimp(waitTime, trials)} times slower than a chimpazee</li>
