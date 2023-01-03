@@ -7,7 +7,7 @@ function Hangman() {
   const [alphabet, setAlphabet] = useState([])
   const [givenLetters, setLetters] = useState([])
   const [progress, setProgress] = useState([])
-  const [guessNum, setGuessNum] = useState(0)
+  const [wrongGuesses, setWrongGuesses] = useState(0)
   
   const won = () => {
     if (progress.length === 0) {
@@ -17,24 +17,30 @@ function Hangman() {
   }
   
   const lost = () => {
-    return (guessNum === 10 && !won())
+    return (wrongGuesses === 10 && !won())
   }
 
   const handleClick = (e, guess, index) => {
     e.target.disabled = true
-    setGuessNum(guessNum + 1)
 
     //gray out clicked button
     const newAlphabet = [...alphabet]
     newAlphabet[index].style = clickedStyle
     setAlphabet(newAlphabet)
 
+    //check guess
+    let rightGuess = false
     const newProgress = [...progress]
     givenLetters.forEach((givenLetter, index) => {
       if (givenLetter === guess) {
         newProgress[index] = guess
+        rightGuess = true
       }
     })
+    if (!rightGuess) {
+      setWrongGuesses(wrongGuesses + 1)
+    }
+
     setProgress(newProgress)
   }
 
@@ -60,7 +66,7 @@ function Hangman() {
   return (
     <div className=" mt-24 text-center">
       <h1 className="text-5xl mb-10"> Hangman </h1>
-      <p> Guesses: { guessNum } </p>
+      <p> Wrong guesses: { wrongGuesses } </p>
       <p className=" h-5"> {givenLetters} </p>
       <p> {progress} </p>
       {won() && <p> You win </p>}
