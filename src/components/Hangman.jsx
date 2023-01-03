@@ -9,9 +9,16 @@ function Hangman() {
   const [progress, setProgress] = useState([])
   const [guessNum, setGuessNum] = useState(0)
   
-  const finished = (progressArr) => {
-    return progressArr.every(char => char !== '_')
-  } 
+  const won = () => {
+    if (progress.length === 0) {
+      return false
+    }
+    return progress.every(char => char !== '_')
+  }
+  
+  const lost = () => {
+    return (guessNum === 10 && !won())
+  }
 
   const handleClick = (e, guess, index) => {
     e.target.disabled = true
@@ -56,7 +63,8 @@ function Hangman() {
       <p> Guesses: { guessNum } </p>
       <p className=" h-5"> {givenLetters} </p>
       <p> {progress} </p>
-      {finished(progress) && <p> You win </p>}
+      {won() && <p> You win </p>}
+      {lost() && <p> You lose </p>}
       
       <div className=" flex justify-center mt-5">
         <div className="inline-block max-w-5xl">
