@@ -9,7 +9,12 @@ function Hangman() {
   const [progress, setProgress] = useState([])
   const [guessNum, setGuessNum] = useState(0)
   
-  const handleClick = (guess, index) => {
+  const finished = (progressArr) => {
+    return progressArr.every(char => char !== '_')
+  } 
+
+  const handleClick = (e, guess, index) => {
+    e.target.disabled = true
     setGuessNum(guessNum + 1)
 
     //gray out clicked button
@@ -25,6 +30,7 @@ function Hangman() {
     })
     setProgress(newProgress)
   }
+
 
   useEffect(() => {
     // make array for the alphabet buttons
@@ -50,11 +56,12 @@ function Hangman() {
       <p> Guesses: { guessNum } </p>
       <p className=" h-5"> {givenLetters} </p>
       <p> {progress} </p>
+      {finished(progress) && <p> You win </p>}
       
       <div className=" flex justify-center mt-5">
         <div className="inline-block max-w-5xl">
           {alphabet.map((item, index) =>
-            <button className=" bg-orange-100 w-14 m-1" onClick={() => {handleClick(item.char, index)}} style= {item.style} key={item.char} > {item.char} </button>
+            <button className=" bg-orange-100 w-14 m-1" onClick={(e) => {handleClick(e, item.char, index)}} style= {item.style} key={item.char} > {item.char} </button>
             )}
         </div>
       </div>
