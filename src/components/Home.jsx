@@ -9,14 +9,14 @@ function Home() {
       img: '/snake.png',
     },
     {
-      route: '/hangman',
-      description: 'Let\'s play hangman',
-      img: '/hangman.jpg',
-    },
-    {
       route: '/mathtest',
       description: 'Test your math Speed',
       img: '/numbers.jpg',
+    },
+    {
+      route: '/hangman',
+      description: 'Let\'s play hangman',
+      img: '/hangman.jpg',
     },
     {
       route: '/typingtest',
