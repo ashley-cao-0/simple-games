@@ -42,8 +42,8 @@ function SaveSnakeScore({score}) {
           :
           <form>
               <label> Your name: </label>
-              <input type="text" onChange={handleChange} />
-              <button onClick={handleSubmit} className=" bg-slate-200 px-2 py-1 ml-2 hover:bg-slate-300"> Submit </button>
+              <input type="text" onChange={handleChange} className= " border border-slate-600"/>
+              <button onClick={handleSubmit} className=" bg-slate-200 px-2 py-1 ml-2 hover:bg-slate-300 border border-slate-400"> Submit </button>
             </form>
           }
         </>
