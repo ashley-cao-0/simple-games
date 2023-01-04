@@ -26,3 +26,9 @@ export async function getRandomParagraphs(){
   console.log(response)
   return text
 }
+
+export async function getRandomWord() {
+  const response = await request.get('https://random-word-api.herokuapp.com/word')
+  const word = response.body[0]
+  return word
+}
