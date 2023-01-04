@@ -132,14 +132,19 @@ function Hangman() {
                 )}
             </div>
           </div>
-
-          <h2>
-            {progress.map((char, index) => <span className=" mr-1 text-5xl" key = {index}>{char}</span>)}
-          </h2>
-
-          <h2>
-            {answer.map((item, index) => <span className=" mr-1 text-5xl" style ={item.style} key = {index}>{item.char}</span>)}
-          </h2>
+          
+          {!lost() ? 
+            <h2>
+              {progress.map((char, index) =>
+                <span className="mr-1 text-5xl" key={index}>{char}</span>)}
+            </h2>
+            : 
+            <h2>
+              {answer.map((item, index) =>
+                <span className=" mr-1 text-5xl" style={item.style} key={index}>{item.char}</span>)}
+            </h2>   
+          }
+          
 
 
           {won() && <h2 className=" text-3xl mt-10"> Congrats </h2>}
