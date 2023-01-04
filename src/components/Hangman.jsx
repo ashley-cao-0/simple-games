@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getRandomWord } from "../apiClient";
 
 function Hangman() {
-  const clickedStyle = { backgroundColor: "grey"}
+  const clickedStyle = { backgroundColor: "grey" }
+  const missingCharStyle = {color: "red"}
   const alphabetChars = [...'abcdefghijklmnopqrstuvwxyz']
   const alphabetObjs = alphabetChars.map(char => {
     return {char}
@@ -12,6 +13,7 @@ function Hangman() {
   const [givenLetters, setLetters] = useState([])
   const [progress, setProgress] = useState([])
   const [wrongGuesses, setWrongGuesses] = useState(0)
+  const [answer, setAnswer] = useState([])
   
   const gameSetup = async () => {
     // make array for the alphabet buttons
@@ -84,6 +86,19 @@ function Hangman() {
   }, [progress, wrongGuesses])
 
   useEffect(() => {
+    if (lost()) {
+      const answerVar = []
+      progress.forEach((char, index) => {
+        answerVar.push({char: givenLetters[index]})
+        if (char === '_') {
+          answerVar[index].style = missingCharStyle
+        }
+      })
+      setAnswer(answerVar)
+    }
+  }, [wrongGuesses])
+
+  useEffect(() => {
     gameSetup()
   }, [])
 
@@ -97,8 +112,8 @@ function Hangman() {
     <div className=" mt-24 text-center flex justify-center flex-col h-screen">
       <h1 className="text-5xl mb-10"> Hangman </h1>
 
-      {/* hangman drawing */}
       <div className=" grow flex max-w-6xl mx-auto">
+      {/* hangman drawing */}
         <div className=" w-96 relative basis-2/3">
           {getStrokes().map(strokeNum =>
             <img src={`/hangman/${ strokeNum }.png`} alt={"stroke " + strokeNum} className=" absolute max-w-full max-h-full" key={ strokeNum} />
@@ -107,7 +122,8 @@ function Hangman() {
           {/* render face when lost */}
           {lost() && <img src="/hangman/11.png" alt="dying face" className=" absolute max-w-full max-h-full" />}
         </div>
-
+        
+        {/* alphabet buttons */}
         <div>  
           <div className=" flex justify-center mt-16 mb-24">
             <div className="inline-block max-w-5xl">
@@ -117,11 +133,12 @@ function Hangman() {
             </div>
           </div>
 
-          {/* <p> Wrong guesses: { wrongGuesses } </p> */}
-          <p className=" h-5"> {givenLetters} </p>
-          {/* <p className=" text-3xl"> {progress} </p> */}
           <h2>
-            {progress.map(char => <span className=" mr-1 text-5xl">{char}</span>)}
+            {progress.map((char, index) => <span className=" mr-1 text-5xl" key = {index}>{char}</span>)}
+          </h2>
+
+          <h2>
+            {answer.map((item, index) => <span className=" mr-1 text-5xl" style ={item.style} key = {index}>{item.char}</span>)}
           </h2>
 
 
