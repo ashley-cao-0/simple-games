@@ -114,9 +114,9 @@ function Hangman() {
     <div className=" mt-24 text-center flex justify-center flex-col h-screen">
       <h1 className="text-5xl mb-10"> Hangman </h1>
 
-      <div className=" grow flex max-w-6xl mx-auto">
+      <div className=" grow flex flex-col lg:flex-row max-w-6xl mx-auto">
       {/* hangman drawing */}
-        <div className=" w-96 relative basis-2/3">
+        <div className=" w-96 relative basis-1/3 lg:basis-1/2 mx-auto">
           {getStrokes().map(strokeNum =>
             <img src={`/hangman/${ strokeNum }.png`} alt={"stroke " + strokeNum} className=" absolute max-w-full max-h-full" key={ strokeNum} />
           )}
@@ -125,9 +125,9 @@ function Hangman() {
           {lost() && <img src="/hangman/11.png" alt="dying face" className=" absolute max-w-full max-h-full" />}
         </div>
         
-        {/* alphabet buttons */}
-        <div>  
+        <div className=" grow md:grow-0">  
           <div className=" flex justify-center mt-16 mb-20">
+        {/* alphabet buttons */}
             <div className="inline-block max-w-5xl">
               {alphabet.map((item, index) =>
                 <button className=" bg-rose-200 hover:bg-red-300 w-14 m-1" onClick={() => {handleClick(item.char, index)}} style= {item.style} disabled= {item.disabled} key={item.char} > {item.char} </button>
