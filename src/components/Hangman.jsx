@@ -72,30 +72,35 @@ function Hangman() {
   }, [])
 
   return (
-    <div className=" mt-24 text-center">
+    <div className=" mt-24 text-center flex justify-center flex-col h-screen">
       <h1 className="text-5xl mb-10"> Hangman </h1>
 
-      <div className=" flex">
-        <div className=" w-96 relative">
+      <div className=" grow flex max-w-6xl mx-auto">
+        <div className=" w-96 relative basis-2/3">
           {getStrokes().map(strokeNum =>
-            <img src={`/hangman/${ strokeNum }.png`} alt={"stroke " + strokeNum} className=" absolute" />
+            <img src={`/hangman/${ strokeNum }.png`} alt={"stroke " + strokeNum} className=" absolute max-w-full max-h-full" key={ strokeNum} />
           )}
         </div>
 
-        <div>
-          <p> Wrong guesses: { wrongGuesses } </p>
-          <p className=" h-5"> {givenLetters} </p>
-          <p> {progress} </p>
-          {won() && <p> You win </p>}
-          {lost() && <p> You lose </p>}
-          
-          <div className=" flex justify-center mt-5">
+        <div>  
+          <div className=" flex justify-center mt-16 mb-24">
             <div className="inline-block max-w-5xl">
               {alphabet.map((item, index) =>
                 <button className=" bg-orange-100 w-14 m-1" onClick={(e) => {handleClick(e, item.char, index)}} style= {item.style} key={item.char} > {item.char} </button>
                 )}
             </div>
           </div>
+
+          {/* <p> Wrong guesses: { wrongGuesses } </p> */}
+          <p className=" h-5"> {givenLetters} </p>
+          {/* <p className=" text-3xl"> {progress} </p> */}
+          <p>
+            {progress.map(char => <span className=" mr-1 text-5xl">{char}</span>)}
+          </p>
+
+
+          {won() && <p> Congrats </p>}
+          {lost() && <p> You lose </p>}
         </div>
       </div>
     </div>
