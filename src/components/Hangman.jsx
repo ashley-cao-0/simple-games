@@ -3,11 +3,29 @@ import { getRandomWord } from "../apiClient";
 
 function Hangman() {
   const clickedStyle = { backgroundColor: "grey"}
+  const alphabetChars = [...'abcdefghijklmnopqrstuvwxyz']
+  const alphabetObjs = alphabetChars.map(char => {
+    return {char}
+  })
   
   const [alphabet, setAlphabet] = useState([])
   const [givenLetters, setLetters] = useState([])
   const [progress, setProgress] = useState([])
   const [wrongGuesses, setWrongGuesses] = useState(0)
+  
+  const gameSetup = async () => {
+    // make array for the alphabet buttons
+    setAlphabet(alphabetObjs)
+    
+    //get random word from api
+    const randomWord = await getRandomWord()
+    const letterArr = randomWord.split('')
+    setLetters(letterArr)
+
+    //make blank word
+    setProgress(Array(letterArr.length).fill('_'))
+  }
+  
   
   const won = () => {
     if (progress.length === 0) {
@@ -20,6 +38,10 @@ function Hangman() {
     return (wrongGuesses === 10 && !won())
   }
 
+  const finished = () => {
+    return won() || lost()
+  }
+
   const getStrokes = () => {
     const result = []
     for (let i = 0; i < wrongGuesses; i++) {
@@ -29,7 +51,6 @@ function Hangman() {
   }
 
   const handleClick = (guess, index) => {
-
     //gray out clicked button
     const newAlphabet = [...alphabet]
     newAlphabet[index].style = clickedStyle
@@ -53,23 +74,24 @@ function Hangman() {
   }
 
 
+  //disable all alphabet buttons on finish game
   useEffect(() => {
-    // make array for the alphabet buttons
-    const alphabetChars = [...'abcdefghijklmnopqrstuvwxyz']
-    const alphabetObjs = alphabetChars.map(char => {
-      return {char}
-    })
-    setAlphabet(alphabetObjs)
-
-    //get random word
-    const getWord = async () => {
-      const randomWord = await getRandomWord()
-      const letterArr = randomWord.split('')
-      setLetters(letterArr)
-      setProgress(Array(letterArr.length).fill('_'))
+    if (finished()) {
+      const newAlphabet = [...alphabet]
+      newAlphabet.forEach(charObj => { charObj.disabled = true })
+      setAlphabet(newAlphabet)
     }
-    getWord()
+  }, [progress, wrongGuesses])
+
+  useEffect(() => {
+    gameSetup()
   }, [])
+
+  const restart = () => {
+    gameSetup()
+    setWrongGuesses(0)
+  }
+
 
   return (
     <div className=" mt-24 text-center flex justify-center flex-col h-screen">
@@ -105,6 +127,7 @@ function Hangman() {
 
           {won() && <h2 className=" text-3xl mt-10"> Congrats </h2>}
           {lost() && <h2 className=" text-3xl mt-10"> You lose </h2>}
+          {finished() && <button onClick={restart}> Play again </button>}
         </div>
       </div>
     </div>
