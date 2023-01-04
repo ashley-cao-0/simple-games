@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getRandomWord } from "../apiClient";
 
 function Hangman() {
-  const clickedStyle = { backgroundColor: "grey" }
+  const clickedStyle = { backgroundColor: "#baabab" }
   const missingCharStyle = {color: "red"}
   const alphabetChars = [...'abcdefghijklmnopqrstuvwxyz']
   const alphabetObjs = alphabetChars.map(char => {
@@ -23,6 +23,7 @@ function Hangman() {
     const randomWord = await getRandomWord()
     const letterArr = randomWord.split('')
     setLetters(letterArr)
+    console.log(randomWord);
 
     //make blank word
     setProgress(Array(letterArr.length).fill('_'))
@@ -103,8 +104,9 @@ function Hangman() {
   }, [])
 
   const restart = () => {
-    gameSetup()
+    setProgress([])
     setWrongGuesses(0)
+    gameSetup()
   }
 
 
@@ -125,10 +127,10 @@ function Hangman() {
         
         {/* alphabet buttons */}
         <div>  
-          <div className=" flex justify-center mt-16 mb-24">
+          <div className=" flex justify-center mt-16 mb-20">
             <div className="inline-block max-w-5xl">
               {alphabet.map((item, index) =>
-                <button className=" bg-orange-100 w-14 m-1" onClick={() => {handleClick(item.char, index)}} style= {item.style} disabled= {item.disabled} key={item.char} > {item.char} </button>
+                <button className=" bg-rose-200 hover:bg-red-300 w-14 m-1" onClick={() => {handleClick(item.char, index)}} style= {item.style} disabled= {item.disabled} key={item.char} > {item.char} </button>
                 )}
             </div>
           </div>
@@ -145,11 +147,9 @@ function Hangman() {
             </h2>   
           }
           
-
-
           {won() && <h2 className=" text-3xl mt-10"> Congrats </h2>}
           {lost() && <h2 className=" text-3xl mt-10"> You lose </h2>}
-          {finished() && <button onClick={restart}> Play again </button>}
+          {finished() && <button onClick={restart} className= " mt-6 bg-red-50 hover:bg-red-100 duration-100 border border-black py-1 px-2"> Play again </button>}
         </div>
       </div>
     </div>
