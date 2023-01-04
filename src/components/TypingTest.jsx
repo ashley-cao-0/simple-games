@@ -32,7 +32,6 @@ function TypingTest() {
   }
 
   const stop = () =>{
-    console.log(myInterval)
     clearInterval(myInterval)
   }
 
@@ -54,9 +53,12 @@ function TypingTest() {
   }
 
   
-  useEffect(async () => {
-    const text = await getRandomParagraphs()
-    setTextToType(text)
+  useEffect(() => {
+    const getText = async () => {
+      const text = await getRandomParagraphs()
+      setTextToType(text)
+    } 
+    getText()
   },[])
 
   return (

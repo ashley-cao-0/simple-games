@@ -23,7 +23,6 @@ export async function getTopScore(scoreNum){
 export async function getRandomParagraphs(){
   const response = await request.get('http://metaphorpsum.com/paragraphs/3')
   const text = response.text
-  console.log(response)
   return text
 }
 
