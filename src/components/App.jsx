@@ -13,7 +13,7 @@ import Hangman from './Hangman'
 function App() {
   return (
     <div className='bg-slate-100 absolute min-h-full w-full font-mono'>
-      <Link to="/" className='fixed z-50 py-3 px-5 m-4 text-2xl bg-slate-300 hover:bg-slate-400 duration-150'>Home</Link>
+      <Link to="/" className='absolute z-50 py-3 px-5 m-4 text-2xl bg-slate-300 hover:bg-slate-400 duration-150'>Home</Link>
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/mathtest' element={<MathTest/>}/>
