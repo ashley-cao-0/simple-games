@@ -28,6 +28,11 @@ function Home() {
       description: 'Test your working memory',
       img: 'memory.jpg',
     },
+    {
+      route: '/stoptheghost',
+      description: 'Let\'s play stop the ghost',
+      img: 'stop-the-ghost.png',
+    },
   
   ]
   return (

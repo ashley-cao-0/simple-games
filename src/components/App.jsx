@@ -9,6 +9,7 @@ import Game from './Game'
 import Snake from './Snake'
 import MemoryTest from './MemoryTest'
 import Hangman from './Hangman'
+import StopTheGhost from './StopTheGhost'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path='/snake' element={<Snake />}/>
       <Route path='/memory' element={<MemoryTest />}/>
       <Route path='/hangman' element={<Hangman />}/>
+      <Route path='/stoptheghost' element={<StopTheGhost />}/>
     </Routes>
     </div>
   )
