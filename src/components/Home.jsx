@@ -28,10 +28,15 @@ function Home() {
       description: 'Test your working memory',
       img: 'memory.jpg',
     },
+    {
+      route: '/stoptheghost',
+      description: 'Let\'s play stop the ghost',
+      img: 'stop-the-ghost.png',
+    },
   
   ]
   return (
-    <div className=" flex justify-center items-center mt-24"> 
+    <div className=" flex justify-center items-center mt-24 mb-16"> 
       <div className=" mt-10 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {contentList.map(content => <Card content = {content} key={content.route} />)}
       </div>

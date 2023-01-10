@@ -11,6 +11,10 @@ module.exports = {
           '0%': {width:'100%'},
           '100%':{width:'0%'}
         },
+        shrinkflex: {
+          '0%': {},
+          '100%':{flex: 0}
+        },
         wobble: {
           '0%':{transform: 'translateX(0)'},
           '25%':{transform: 'translateX(-4px)'},
