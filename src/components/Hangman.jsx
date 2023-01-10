@@ -147,8 +147,8 @@ function Hangman() {
             </h2>   
           }
           
-          {won() && <h2 className=" text-3xl mt-10"> Congrats </h2>}
-          {lost() && <h2 className=" text-3xl mt-10"> You lose </h2>}
+          {won() && <h2 className=" text-3xl mt-10"> Congrats. You haven't hung a man </h2>}
+          {lost() && <h2 className=" text-3xl mt-10"> You have hung a man </h2>}
           {finished() && <button onClick={restart} className= " mt-6 bg-red-50 hover:bg-red-100 duration-100 border border-black py-1 px-2"> Play again </button>}
         </div>
       </div>
