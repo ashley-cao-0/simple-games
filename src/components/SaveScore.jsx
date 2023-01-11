@@ -38,7 +38,7 @@ function SaveScore({game, score}) {
     <>
       {isHighScore && 
         <div className=" mt-10">
-          {!clickedSave ? <button onClick={handleClick} className=" bg-slate-300 text-xl px-4 py-2"> Save high score </button>
+          {!clickedSave ? <button onClick={handleClick} className="  text-xl px-4 py-2 border border-gray-500 bg-red-200"> Save high score </button>
           :
           <form>
               <label> Your name: </label>
