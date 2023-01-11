@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import SaveSnakeScore from "./SaveSnakeScore";
+import SaveScore from "./SaveScore";
 
 function Snake() {
   const rowNum = 20
@@ -268,7 +268,7 @@ function Snake() {
           </div>
 
           {/********  Save score form ********/}  
-          {gameOver && <SaveSnakeScore score={snake?.length - 1}/>}
+          {gameOver && <SaveScore game='snake' score={snake?.length - 1}/>}
         </div>
 
       </div>
