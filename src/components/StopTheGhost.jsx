@@ -48,6 +48,14 @@ function StopTheGhost() {
     }
   }
 
+  const getHumanStyle = () => {
+    if (won) {
+      return {transform: "scaleX(-1)"}
+    } else {
+      return {}
+    }
+  }
+
   const getScore = () => {
     if (time >= 500) {
       return 99999
@@ -71,9 +79,9 @@ function StopTheGhost() {
 
   const winGame = () => {
     setRunning(false)
+    setWon(true)
     setTime(Date.now() - startTime)
     clearTimeout(timeOutID)
-    setWon(true)
   }
 
   const restart = () => {
@@ -114,7 +122,7 @@ function StopTheGhost() {
             <div className= {" flex-1 " + animation}
               style={{ animationPlayState: getAnimationPlayState() }}>
             </div>
-            <img src= {getHumanImgSrc()} alt="human" className=" h-14 sm:h-20 md:h-28 w-auto object-scale-down"/>
+            <img src= {getHumanImgSrc()} style={getHumanStyle()} alt="human" className=" h-14 sm:h-20 md:h-28 w-auto object-scale-down"/>
           </div>
         </div>
 
