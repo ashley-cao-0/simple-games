@@ -50,16 +50,16 @@ function StopTheGhost() {
 
   const getScore = () => {
     if (time >= 490) {
-      return 100000
+      return 99999
     } else {
-      return Math.trunc(100000*Math.pow(time/490,2))
+      return Math.trunc(100000*Math.pow(time/500,2))
     }
   }
 
   const startGame = () => {
     setAnimation(tailwindAnimation)
     setStartTime(Date.now())
-    const myTimeOut = setTimeout(loseGame, 490);
+    const myTimeOut = setTimeout(loseGame, 500);
     setTimeOutId(myTimeOut)
     setRunning(true)
   }
