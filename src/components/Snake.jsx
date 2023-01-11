@@ -226,7 +226,7 @@ function Snake() {
     <>
       <Link to="/leaderboard/snake" className='absolute z-50 py-3 px-5 m-4 ml-32 text-2xl bg-slate-300 hover:bg-slate-400 duration-150'> Leader board </Link>
       
-      <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className=" min-h-full w-full absolute bg-slate-50 top-0 text-slate-800">
+      <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className=" min-h-full w-full absolute bg-slate-50 top-0 text-slate-800 pb-10">
         <div className=" mt-24 text-center ">
           <h1 className=" text-5xl mb-10"> SNAKE! </h1>
           <h2 className=" mb-3 mx-3 text-2xl inline-block">Score: {snake?.length - 1}</h2>
