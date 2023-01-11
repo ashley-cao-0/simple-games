@@ -21,7 +21,7 @@ function LeaderBoard() {
   }
 
   const getPageList = () => {
-    const pageNum = Math.round(scores.length / itemPerPage)
+    const pageNum = Math.ceil(scores.length / itemPerPage)
     const result = []
     for (let i = 0; i < pageNum; i++) {
       if (i === pageIndex) {
