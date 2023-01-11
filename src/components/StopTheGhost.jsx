@@ -49,7 +49,7 @@ function StopTheGhost() {
   }
 
   const getScore = () => {
-    if (time >= 490) {
+    if (time >= 500) {
       return 99999
     } else {
       return Math.trunc(100000*Math.pow(time/500,2))
