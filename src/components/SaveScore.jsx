@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveHighScore, getTopScores } from '../index'
 
-function SaveScore({game, score}) {
+function SaveScore({game, score, hidePlayAgain }) {
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [clickedSave, setClickedSave] = useState(false)
@@ -14,6 +14,7 @@ function SaveScore({game, score}) {
 
   const handleClick = () => {
     setClickedSave(true)
+    hidePlayAgain()
   }
 
   const handleSubmit = async (e) => {

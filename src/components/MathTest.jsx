@@ -14,6 +14,7 @@ function MathTest() {
   const [timesUp, setTimesUp] = useState(false)
   const [timerAnimation, setTimerAnimation] = useState('')
   const [inputAnimation, setInputAnimation] = useState('')
+  const [clickedSave, setClickedSave] = useState(false)
   
   const ref = useRef()
 
@@ -95,8 +96,12 @@ function MathTest() {
         
         {timesUp &&
           <div className=" flex justify-center">
-          <SaveScore game='mathtest' score={count} />
-          <button className=" mt-10 mx-2 text-xl py-2 px-4 border border-slate-500 bg-slate-300" onClick={resetGame}>Play again</button>
+            <SaveScore game='mathtest' score={count} hidePlayAgain={() => {setClickedSave(true)} } />
+            {!clickedSave &&
+              <button className=" mt-10 mx-2 text-xl py-2 px-4 border border-slate-500 bg-slate-300"
+              onClick={resetGame}>Play again
+              </button>
+            }
           </div>
         }
       </div>       
