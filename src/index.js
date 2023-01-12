@@ -29,7 +29,6 @@ export const getTopScores = async (game) => {
     snapshot.forEach(doc => {
       scores.push({...doc.data(), id: doc.id})
     })
-    scores = scores.filter(score => score.name !== 'anonymous')
     if (scores.length > 50) {
       scores = scores.slice (0, 50)
     }
