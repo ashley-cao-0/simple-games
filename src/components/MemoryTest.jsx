@@ -177,8 +177,8 @@ const MemoryTest = () => {
             <h2 className=" font-bold text-center"> Result </h2>
             <ul className=" list-disc ">
               <li> Trials: { trials } </li>
-              <li> Your average time taken to start: {Math.round(waitTime/trials/1000)}s </li>
-              <li> Your average accuracy: {Math.round(numCorrect/(trials*9)*100)}% </li>
+              <li> Average time taken to start: {Math.round(waitTime/trials/1000)}s </li>
+              <li> Average accuracy: {Math.round(numCorrect/(trials*9)*100)}% </li>
               <li className=" font-semibold mb-4"> You are currently {accuracyVsChimp(numCorrect, trials)} times less accurate, and {speedVsChimp(waitTime, trials)} times slower than a chimpazee</li>
               <a href="https://www.youtube.com/watch?v=zsXP8qeFF6A" className=" underline"> Watch how chimpazees do </a>
             </ul>
