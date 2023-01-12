@@ -66,7 +66,9 @@ function TypingTest() {
         </p>
       </div>
 
-      <button onClick={stop} className=" border bg-red-400 hover:bg-red-500 duration-100 mt-5 py-2 px-4">Stop</button>
+      {started && <button onClick={stop} className=" border bg-red-400 hover:bg-red-500 duration-100 mt-5 py-2 px-4">
+        Stop
+      </button>}
 
       <form className=" opacity-0">
         <input type="text" autoFocus ref={inputRef} onChange={handleChange} className=" "/>
