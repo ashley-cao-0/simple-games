@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import { randomNum } from "../utils";
 
 const MemoryTest = () => {
   const rowNum = 5
@@ -30,7 +31,6 @@ const MemoryTest = () => {
       coordinateIndexes.push(row*colNum + col)
     }
   }
-  const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
   
   const [digitNum, setDigitNum] = useState(9)
   

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import SaveScore from "./SaveScore";
+import { randomNum } from "../utils";
 
 function MathTest() {
-  const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
   const time = 30
 
   const [num1, setNum1] = useState(randomNum(10,99))

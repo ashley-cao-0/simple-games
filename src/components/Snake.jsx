@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import SaveScore from "./SaveScore";
+import { randomNum } from "../utils";
 
 function Snake() {
   const rowNum = 20
@@ -17,7 +18,6 @@ function Snake() {
   //create a matrix
   const gridData = Array(rowNum).fill().map(()=>Array(colNum).fill({...cell}))
   
-  const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
   const allCordinates = []
   for (let row = 0; row < rowNum; row++) {
     for (let col = 0; col < colNum; col++) {
