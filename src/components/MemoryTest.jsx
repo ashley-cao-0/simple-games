@@ -60,12 +60,12 @@ const MemoryTest = () => {
   const accuracyVsChimp = (numCorrect, trials) => {
     const accuracy = numCorrect/(trials*9)
     const chimpAccuracy = 0.9
-    return Math.round(chimpAccuracy/accuracy)
+    return Math.round((chimpAccuracy/accuracy)*1000)/1000
   }
 
   const speedVsChimp = (waitTime, trials) => {
     const chimpWaitTime = 500*trials
-    return waitTime/chimpWaitTime
+    return Math.round((waitTime/chimpWaitTime)*1000)/1000
   }
 
   const makeGrid = () => {
