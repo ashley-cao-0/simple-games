@@ -1,9 +1,9 @@
-import React, {useEffect, useState, useRef} from "react";
-import {getRandomParagraphs} from '../apiClient'
+import React, {useState, useRef} from "react";
+import getRandomText from "../getRandomText";
 
 function TypingTest() {
   const inputRef = useRef(null)
-  const [textToType, setTextToType] = useState('')
+  const [textToType, setTextToType] = useState(getRandomText(120))
   const [typedText, setTypedText] = useState('')
   const [time, setTime] = useState(0)
   const [myInterval, setmyInterval] = useState(0)
@@ -51,15 +51,6 @@ function TypingTest() {
       return Math.floor(wordNum/minute)
     } else {return 0}
   }
-
-  
-  useEffect(() => {
-    const getText = async () => {
-      const text = await getRandomParagraphs()
-      setTextToType(text)
-    } 
-    getText()
-  },[])
 
   return (
     <div className=" text-center mt-28">
