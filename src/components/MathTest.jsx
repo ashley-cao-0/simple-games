@@ -76,7 +76,7 @@ function MathTest() {
         <h2 className="mt-24 text-xl">Score: {count}</h2>
         <div className=" w-96 mx-auto mt-5">
           <div className={'bg-red-500 h-1 w-full ' + timerAnimation}></div>
-          <div className=" bg-white p-4 rounded-md h-36 flex items-center justify-center">
+          <div className=" bg-white p-4 h-36 flex items-center justify-center border border-slate-300">
           {!timesUp ?
             <h2 className=" text-4xl">{num1} + {num2}</h2>
             :
