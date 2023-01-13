@@ -23,7 +23,6 @@ function Hangman() {
     const randomWord = await getRandomWord()
     const letterArr = randomWord.split('')
     setLetters(letterArr)
-    console.log(randomWord);
 
     //make blank word
     setProgress(Array(letterArr.length).fill('_'))
