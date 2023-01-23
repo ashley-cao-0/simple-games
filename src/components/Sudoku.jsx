@@ -15,17 +15,20 @@ function Sudoku() {
   return (
     <div className=" mt-24">
       <div className=" flex justify-center">
+      {/* Empty board with border to hold digits */}
+        {/* grid for 3 big blocks with heavy border*/}
         <div className=" z-40 absolute grid grid-cols-3 border border-black">
           {Array(9).fill().map((item, i) => {
             return <div key={i} className=" border border-black w-24 h-24">  </div>
           }
           )}
         </div>
-
+        
+        {/* cell with light border */}
         <div className=" absolute flex flex-col border">
           {Array(9).fill(Array(9).fill()).map((row, i) => 
-            <div className=" flex">
-              {row.map((cell, i) => <div className=" flex w-8 h-8 border"> </div>)}
+            <div key={i} className=" flex">
+              {row.map((cell, i) => <div key={i} className=" flex w-8 h-8 border"> </div>)}
             </div>
           
           )}
