@@ -3,7 +3,15 @@ import { getSudoku } from "../apiClient";
 
 function Sudoku() {
   const [board, setBoard] = useState([])
-  const [selectedCell, setSelectedCell] = useState([0,0])
+  const [selectedCell, setSelectedCell] = useState([0, 0])
+  
+  const getCellStyle = (iRow, iCol) => {
+    if (selectedCell[0] === iRow && selectedCell[1] === iCol) {
+      return 'bg-sky-200'
+    } else {
+      return ''
+    }
+  }
 
   useEffect(() => {
     const getNewSudoku = async () => {
@@ -25,10 +33,10 @@ function Sudoku() {
         </div>
         
         {/* cell with light border */}
-        <div className=" absolute flex flex-col border">
-          {Array(9).fill(Array(9).fill()).map((row, i) => 
-            <div key={i} className=" flex">
-              {row.map((cell, i) => <div key={i} className=" flex w-8 h-8 border"> </div>)}
+        <div className=" absolute flex flex-col">
+          {Array(9).fill(Array(9).fill()).map((row, iRow) => 
+            <div key={iRow} className=" flex">
+              {row.map((cell, iCol) => <div key={iCol} className={" flex w-8 h-8 border border-slate-300 " + getCellStyle(iRow, iCol)}> </div>)}
             </div>
           
           )}
@@ -38,7 +46,7 @@ function Sudoku() {
           {board.map((row, iRow)=>
             <div key={iRow} className="flex">
               {row.map((digit, iCol) =>
-                <div key={iCol} onClick = {() => setSelectedCell([iRow, iCol]) }  className=" z-50 w-8 h-8 flex justify-center items-center bg-transparent" >
+                <div key={iCol} onClick = {() => setSelectedCell([iRow, iCol]) }  className="z-50 w-8 h-8 flex justify-center items-center bg-transparent cursor-default" >
                   {digit !==0 && <p> {digit} </p>}
                 </div>
               
