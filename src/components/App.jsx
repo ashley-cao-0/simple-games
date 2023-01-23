@@ -10,6 +10,7 @@ import Snake from './Snake'
 import MemoryTest from './MemoryTest'
 import Hangman from './Hangman'
 import StopTheGhost from './StopTheGhost'
+import Sudoku from './Sudoku'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path='/memory' element={<MemoryTest />}/>
       <Route path='/hangman' element={<Hangman />}/>
       <Route path='/stoptheghost' element={<StopTheGhost />}/>
+      <Route path='/sudoku' element={<Sudoku />}/>
     </Routes>
     </div>
   )
