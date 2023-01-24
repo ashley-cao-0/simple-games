@@ -102,7 +102,6 @@ function Sudoku() {
   }
 
   const handleKeyDown = (e) => {
-    console.log(e.keyCode);
     let iRow = selectedCell[0]
     let iCol = selectedCell[1]
     if ('123456789'.includes(e.key) && initialBoard[iRow][iCol] === 0) {
@@ -198,7 +197,7 @@ function Sudoku() {
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className=" min-h-full w-full absolute top-0">
       {/* content wraper */}
       <div className=" flex justify-center mt-24">
-        <div className=" relative flex justify-center w-72 h-72">
+        <div className=" relative flex w-72 h-72 bg-white">
         {/* Whole sudoku board */}
           {/* Empty board with border to hold digits */}
             {/* grid for 3 big blocks with heavy border*/}
