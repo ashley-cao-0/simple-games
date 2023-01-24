@@ -102,13 +102,71 @@ function Sudoku() {
   }
 
   const handleKeyDown = (e) => {
-    const row = selectedCell[0]
-    const col = selectedCell[1]
-    if ('123456789'.includes(e.key) && initialBoard[row][col] === 0) {
+    console.log(e.keyCode);
+    let iRow = selectedCell[0]
+    let iCol = selectedCell[1]
+    if ('123456789'.includes(e.key) && initialBoard[iRow][iCol] === 0) {
       const inputDigit = Number(e.key)
       const newBoard = [...board]
-      newBoard[row][col] = inputDigit
+      newBoard[iRow][iCol] = inputDigit
       setBoard(newBoard)
+    
+      //if user is trying to move the selected cell with arrow keys
+    } else if ([37, 38, 39, 40].includes(e.keyCode)) {
+      switch (e.keyCode) {
+        case 37:
+          // move 1 space
+          iCol = iCol - 1
+          // check if all spaces along the way were checked
+          while (iCol !== -1) {
+            // if meet a valid space then stop loop
+            if (!isGivenDigit(iRow, iCol)) {
+              break
+            }
+            iCol = iCol - 1
+          }
+          // set the new selected cell if any qualifies
+          if (iCol !== -1 && !isGivenDigit(iRow, iCol)) {
+            setSelectedCell([iRow, iCol])
+          }
+          break
+        case 38:
+          iRow = iRow - 1
+          while (iRow !== -1) {
+            if (!isGivenDigit(iRow, iCol)) {
+              break
+            }
+            iRow = iRow - 1
+          }
+          if (iRow !== -1 && !isGivenDigit(iRow, iCol)) {
+            setSelectedCell([iRow, iCol])
+          }
+          break
+        case 39:
+          iCol = iCol + 1
+          while (iCol !== 9) {
+            if (!isGivenDigit(iRow, iCol)) {
+              break
+            }
+            iCol = iCol + 1
+          }
+          if (iCol !== 9 && !isGivenDigit(iRow, iCol)) {
+            setSelectedCell([iRow, iCol])
+          }
+          break
+        case 40:
+          iRow = iRow + 1
+          while (iRow !== 9) {
+            if (!isGivenDigit(iRow, iCol)) {
+              break
+            }
+            iRow = iRow + 1
+          }
+          if (iRow !== 9 && !isGivenDigit(iRow, iCol)) {
+            setSelectedCell([iRow, iCol])
+          }
+          break
+      }
     }
   }
 
