@@ -5,7 +5,7 @@ function Home() {
   const contentList = [
     {
       route: '/snake',
-      description: 'Let\'s play snake!',
+      description: 'Snake!',
       img: '/snake.jpg',
     },
     {
@@ -15,8 +15,13 @@ function Home() {
     },
     {
       route: '/hangman',
-      description: 'Let\'s play hangman',
+      description: 'Hangman',
       img: '/hangman.jpg',
+    },
+    {
+      route: '/sudoku',
+      description: 'Sudoku',
+      img: '/sudoku.jpg',
     },
     {
       route: '/typingtest',
@@ -30,7 +35,7 @@ function Home() {
     },
     {
       route: '/stoptheghost',
-      description: 'Let\'s play stop the ghost',
+      description: 'Stop the ghost',
       img: 'stop-the-ghost.png',
     },
   
