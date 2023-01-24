@@ -15,8 +15,14 @@ export async function getRandomWord() {
   return word
 }
 
-export async function getSudoku() {
-  const response = await request.get('https://sudoku-api.vercel.app/api/dosuku')
-  const sudoku = response.body.newboard.grids[0]
+//This api give random sudoku boards with random difficulty. 'Easy' is really rare
+export async function getSudoku(difficulty) {
+  let newDifficulty = ''
+  let sudoku = []
+  while (newDifficulty !== difficulty) {
+    const response = await request.get('https://sudoku-api.vercel.app/api/dosuku')
+    sudoku = response.body.newboard.grids[0]
+    newDifficulty = sudoku.difficulty
+  }
   return sudoku
 }
