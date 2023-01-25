@@ -7,6 +7,8 @@ function Sudoku() {
   const [initialBoard, setInitialBoard] = useState([])
   const [selectedCell, setSelectedCell] = useState([0, 0])
   const [difficulty, setDifficulty] = useState('Medium')
+  const [mistakes, setMistakes] = useState(0)
+  const [won, setWon] = useState(false)
   
   // highLight selected cell
   const getSelectedCellStyle = (iRow, iCol) => {
@@ -104,14 +106,14 @@ function Sudoku() {
   const handleKeyDown = (e) => {
     let iRow = selectedCell[0]
     let iCol = selectedCell[1]
-    if ('123456789'.includes(e.key) && initialBoard[iRow][iCol] === 0) {
+    if ('0123456789'.includes(e.key) && initialBoard[iRow][iCol] === 0) {
       const inputDigit = Number(e.key)
       const newBoard = [...board]
       newBoard[iRow][iCol] = inputDigit
       setBoard(newBoard)
-    
-      //if user is trying to move the selected cell with arrow keys
-    } else if ([37, 38, 39, 40].includes(e.keyCode)) {
+    }
+    //if user is trying to move the selected cell with arrow keys
+    else if ([37, 38, 39, 40].includes(e.keyCode)) {
       switch (e.keyCode) {
         case 37:
           // move 1 space
@@ -178,8 +180,15 @@ function Sudoku() {
     setBoard(newSudokuValue2)
   }
 
+  const restart = () => {
+    getNewSudoku()
+    setMistakes(0)
+  }
+
+  //renew board when change difficulty
   useEffect(() => {
     ref.current.focus()
+    setMistakes(0)
     getNewSudoku()
   }, [difficulty])
   
@@ -191,7 +200,20 @@ function Sudoku() {
             break
           }
         }
-    }, [initialBoard])
+  }, [initialBoard])
+  
+  //track mistake when user input new digit
+  useEffect(() => {
+    if (board.length === 0) {
+      return
+    }
+    // get indexes of the modified cell
+    const iRow = selectedCell[0]
+    const iCol = selectedCell[1]
+    if (board[iRow][iCol] !== 0 && isDuplicate(iRow, iCol)) {
+      setMistakes(mistakes + 1)
+    }
+  }, [board])
 
   return (
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className=" min-h-full w-full absolute top-0">
@@ -233,7 +255,8 @@ function Sudoku() {
             </div>
         </div>
         
-        <div className=" ml-10">
+        <div className=" ml-14">
+          <h1 className=" mb-6"> Mistakes: { mistakes } </h1>
           <h1> Difficulty: {difficulty} </h1>
           
           <div className=" flex flex-col justify-center">
@@ -242,7 +265,7 @@ function Sudoku() {
               <button onClick={() => setDifficulty('Hard')} className=" px-4 py-2  my-2 ml-4 rounded-sm bg-rose-300"> Hard </button>
             </div>
 
-            <button onClick={getNewSudoku} className=" px-4 py-2 mt-7 rounded-sm bg-blue-300"> New game </button>
+            <button onClick={restart} className=" px-4 py-2 mt-7 rounded-sm bg-blue-300"> New game </button>
           </div>
 
         </div>
