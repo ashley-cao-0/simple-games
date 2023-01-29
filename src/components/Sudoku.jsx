@@ -20,13 +20,6 @@ function Sudoku() {
     }
   }
 
-  // const isGivenDigit = (iRow, iCol) => {
-  //   if (givenDigits.length !== 0) {
-  //     return givenDigits[iRow][iCol] !== 0
-  //   } else {
-  //     return false
-  //   }
-  // }
   
   const getCellTextStyle = (iRow, iCol) => {
     let result = ''
