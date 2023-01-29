@@ -6,6 +6,7 @@ function Sudoku() {
   const [board, setBoard] = useState([])
   const [givenDigits, setGivenDigits] = useState([])
   const [solution , setSolution] = useState([])
+  const [guesses , setGuesses] = useState([])
   const [selectedCell, setSelectedCell] = useState([0, 0])
   const [difficulty, setDifficulty] = useState('Medium')
   const [mistakes, setMistakes] = useState(0)
@@ -263,10 +264,19 @@ function Sudoku() {
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className=" min-h-full w-full absolute top-0">
       {/* content wraper */}
       <div className=" flex justify-center mt-24">
-        <div className=" flex flex-col items-center">
-          <div className=" h-7">
+        <div className=" flex flex-col">
+
+          {/* winning message */}
+          <div className=" h-7 text-center">
             {won && <h1> Completed! </h1>}
           </div>
+
+          {/* user guesses */}
+          <div className=" flex mb-2">
+            <h1 > Noted digits: </h1>
+            <button className="bg-indigo-200 border border-slate-300 rounded-full px-1"> + </button>
+          </div>
+           
         
           {/* Whole sudoku board */}
           <div className=" relative flex w-72 h-72 bg-white">
