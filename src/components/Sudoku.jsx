@@ -4,7 +4,7 @@ import { getSudoku } from "../apiClient";
 function Sudoku() {
   const ref = useRef(null)
   const [board, setBoard] = useState([])
-  const [initialBoard, setInitialBoard] = useState([])
+  const [givenDigits, setGivenDigits] = useState([])
   const [solution , setSolution] = useState([])
   const [selectedCell, setSelectedCell] = useState([0, 0])
   const [difficulty, setDifficulty] = useState('Medium')
@@ -20,18 +20,18 @@ function Sudoku() {
     }
   }
 
-  const isGivenDigit = (iRow, iCol) => {
-    if (initialBoard.length !== 0) {
-      return initialBoard[iRow][iCol] !== 0
-    } else {
-      return false
-    }
-  }
+  // const isGivenDigit = (iRow, iCol) => {
+  //   if (givenDigits.length !== 0) {
+  //     return givenDigits[iRow][iCol] !== 0
+  //   } else {
+  //     return false
+  //   }
+  // }
   
   const getCellTextStyle = (iRow, iCol) => {
     let result = ''
 
-    if (!isGivenDigit(iRow, iCol)) {
+    if (!givenDigits[iRow][iCol]) {
       result = result.concat(' font-semibold')
       if (isDuplicate(iRow, iCol)) {
         result = result.concat(' text-red-500')
@@ -43,7 +43,10 @@ function Sudoku() {
   }
 
   const duplicateBgColor = (iRow, iCol) => {
-    if (isGivenDigit(iRow, iCol) && isDuplicate(iRow, iCol)) {
+    if (givenDigits.length === 0) {
+      return
+    }
+    else if (givenDigits[iRow][iCol] && isDuplicate(iRow, iCol)) {
       return ' bg-red-100'
     } else {
       return ''
@@ -52,7 +55,7 @@ function Sudoku() {
 
   const isDuplicate = (iRow, iCol) => {
     const currentDigit = board[iRow][iCol]
-    // const isGivenDigit = initialBoard[iRow][iCol] === 0
+    // const isGivenDigit = givenDigits[iRow][iCol] === 0
     let result = false
 
     for (let i = 0; i < 9; i++) {
@@ -99,7 +102,7 @@ function Sudoku() {
   }
 
   const changeSelectedCell = (iRow, iCol) => {
-    if (!isGivenDigit(iRow, iCol)) {
+    if (!givenDigits[iRow][iCol]) {
       setSelectedCell([iRow, iCol])
     } 
   }
@@ -111,7 +114,7 @@ function Sudoku() {
       setBoard(newBoard)
   }
 
-  const moveSelectedCell = (keyCode, iRow, iCol) => {
+  const moveSelectedCell_keyBoard = (keyCode, iRow, iCol) => {
     switch (keyCode) {
       case 37:
         // move 1 space
@@ -119,49 +122,49 @@ function Sudoku() {
         // check if all spaces along the way were checked
         while (iCol !== -1) {
           // if meet a valid space then stop loop
-          if (!isGivenDigit(iRow, iCol)) {
+          if (!givenDigits[iRow][iCol]) {
             break
           }
           iCol = iCol - 1
         }
         // set the new selected cell if any qualifies
-        if (iCol !== -1 && !isGivenDigit(iRow, iCol)) {
+        if (iCol !== -1 && !givenDigits[iRow][iCol]) {
           setSelectedCell([iRow, iCol])
         }
         break
       case 38:
         iRow = iRow - 1
         while (iRow !== -1) {
-          if (!isGivenDigit(iRow, iCol)) {
+          if (!givenDigits[iRow][iCol]) {
             break
           }
           iRow = iRow - 1
         }
-        if (iRow !== -1 && !isGivenDigit(iRow, iCol)) {
+        if (iRow !== -1 && !givenDigits[iRow][iCol]) {
           setSelectedCell([iRow, iCol])
         }
         break
       case 39:
         iCol = iCol + 1
         while (iCol !== 9) {
-          if (!isGivenDigit(iRow, iCol)) {
+          if (!givenDigits[iRow][iCol]) {
             break
           }
           iCol = iCol + 1
         }
-        if (iCol !== 9 && !isGivenDigit(iRow, iCol)) {
+        if (iCol !== 9 && !givenDigits[iRow][iCol]) {
           setSelectedCell([iRow, iCol])
         }
         break
       case 40:
         iRow = iRow + 1
         while (iRow !== 9) {
-          if (!isGivenDigit(iRow, iCol)) {
+          if (!givenDigits[iRow][iCol]) {
             break
           }
           iRow = iRow + 1
         }
-        if (iRow !== 9 && !isGivenDigit(iRow, iCol)) {
+        if (iRow !== 9 && !givenDigits[iRow][iCol]) {
           setSelectedCell([iRow, iCol])
         }
         break
@@ -171,22 +174,23 @@ function Sudoku() {
   const handleKeyDown = (e) => {
     let iRow = selectedCell[0]
     let iCol = selectedCell[1]
-    if ('0123456789'.includes(e.key) && initialBoard[iRow][iCol] === 0) {
+    if ('0123456789'.includes(e.key) && !givenDigits[iRow][iCol]) {
       changeDigit(e.key, iRow, iCol)
     }
     //if user is trying to move the selected cell with arrow keys
     else if ([37, 38, 39, 40].includes(e.keyCode)) {
-      moveSelectedCell(e.keyCode, iRow, iCol)
+      moveSelectedCell_keyBoard(e.keyCode, iRow, iCol)
     }
   }
 
   // fetch new sudoku board
   const getNewSudoku = async () => {
     const newSudoku = await getSudoku(difficulty)
-    setInitialBoard(newSudoku.value)
+    setBoard(newSudoku.value)
     //create a copy of the matrix
-    const newSudokuValue2 = newSudoku.value.map(row => row.map(digit => digit))
-    setBoard(newSudokuValue2)
+    const isGivenArr = newSudoku.value.map(row => row.map(digit => digit !== 0))
+    setGivenDigits(isGivenArr)
+    console.log(isGivenArr);
     setSolution(newSudoku.solution)
   }
 
@@ -204,13 +208,16 @@ function Sudoku() {
   
   //move the first selected cell if it's on given digits
   useEffect(() => {
-        for (let i = 0; i < 9 ; i++) {
-          if (!isGivenDigit(0, i)) {
-            setSelectedCell([0, i])
-            break
-          }
-        }
-  }, [initialBoard])
+    if (givenDigits.length === 0) {
+      return
+    }
+    for (let i = 0; i < 9 ; i++) {
+      if (!givenDigits[0][i]) {
+        setSelectedCell([0, i])
+        break
+      }
+    }
+  }, [givenDigits])
   
   //when user input new digit
   useEffect(() => {
@@ -242,7 +249,7 @@ function Sudoku() {
 
   //*** testing code */ 
   const solve = () => {
-    console.log(initialBoard);
+    console.log(givenDigits);
     console.log(board);
     setBoard(solution)
   }
