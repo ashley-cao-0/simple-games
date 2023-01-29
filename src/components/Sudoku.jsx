@@ -242,8 +242,6 @@ function Sudoku() {
 
   //*** testing code */ 
   const solve = () => {
-    console.log(givenDigits);
-    console.log(board);
     setBoard(solution)
   }
 
