@@ -10,6 +10,7 @@ function Sudoku() {
   const [difficulty, setDifficulty] = useState('Medium')
   const [mistakes, setMistakes] = useState(0)
   const [won, setWon] = useState(false)
+  const [showGif, setShowGif] = useState(false)
   
   // highLight selected cell
   const getSelectedCellStyle = (iRow, iCol) => {
@@ -183,7 +184,6 @@ function Sudoku() {
     //create a copy of the matrix
     const isGivenArr = newSudoku.value.map(row => row.map(digit => digit !== 0))
     setGivenDigits(isGivenArr)
-    console.log(isGivenArr);
     setSolution(newSudoku.solution)
   }
 
@@ -237,15 +237,24 @@ function Sudoku() {
       }
     }
     setWon(wonGame)
+    setShowGif(wonGame)
   }, [board])
+
+  //show gif once when user win
+  useEffect(() => {
+    if (!won) {
+      return
+    }
+    setTimeout(() => {
+      setShowGif(false)
+    }, 4000);
+  }, [won])
 
 
   //*** testing code */ 
   const solve = () => {
     setBoard(solution)
   }
-
-
   //*** testing code */ 
 
 
@@ -254,45 +263,56 @@ function Sudoku() {
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className=" min-h-full w-full absolute top-0">
       {/* content wraper */}
       <div className=" flex justify-center mt-24">
-        <div className=" relative flex w-72 h-72 bg-white">
-        {/* Whole sudoku board */}
-          {/* Empty board with border to hold digits */}
-            {/* grid for 3 big blocks with heavy border*/}
-            <div className=" z-30 absolute grid grid-cols-3 border border-black min-w-max">
-              {Array(9).fill().map((item, i) => {
-                return <div key={i} className=" border border-black w-24 h-24">  </div>
-              }
-              )}
-            </div>
-            
-            {/* cell with light border */}
-            <div className=" absolute flex flex-col">
-              {Array(9).fill(Array(9).fill()).map((row, iRow) => 
-                <div key={iRow} className=" flex">
-                  {row.map((cell, iCol) => <div key={iCol} className={" flex w-8 h-8 border border-slate-300 " + getSelectedCellStyle(iRow, iCol) + duplicateBgColor(iRow, iCol)}> </div>)}
-                </div>
+        <div className=" flex flex-col items-center">
+          <div className=" h-7">
+            {won && <h1> Completed! </h1>}
+          </div>
+        
+          {/* Whole sudoku board */}
+          <div className=" relative flex w-72 h-72 bg-white">
+            {/* Empty board with border to hold digits */}
+              {/* grid for 3 big blocks with heavy border*/}
+              <div className=" z-30 absolute grid grid-cols-3 border border-black min-w-max">
+                {Array(9).fill().map((item, i) => {
+                  return <div key={i} className=" border border-black w-24 h-24">  </div>
+                }
+                )}
+              </div>
               
-              )}
-            </div>
-            
-          {/* Digits */}
-            <div className="  border flex flex-col ">
-              {board.map((row, iRow)=>
-                <div key={iRow} className="flex">
-                  {row.map((digit, iCol) =>
-                    <div key={iCol} onClick = {() => changeSelectedCell(iRow, iCol) }  className={"z-40 w-8 h-8 flex justify-center items-center bg-transparent cursor-default "  } >
-                      {digit !==0 && <p className={ getCellTextStyle(iRow, iCol)}> {digit} </p>}
-                    </div>
-                  
-                    )}
-                </div>)
-              }
-            </div>
-        </div>
+              {/* cell with light border */}
+              <div className=" absolute flex flex-col">
+                {Array(9).fill(Array(9).fill()).map((row, iRow) => 
+                  <div key={iRow} className=" flex">
+                    {row.map((cell, iCol) => <div key={iCol} className={" flex w-8 h-8 border border-slate-300 " + getSelectedCellStyle(iRow, iCol) + duplicateBgColor(iRow, iCol)}> </div>)}
+                  </div>
+                
+                )}
+              </div>
+              
+            {/* Digits */}
+              <div className="  border flex flex-col ">
+                {board.map((row, iRow)=>
+                  <div key={iRow} className="flex">
+                    {row.map((digit, iCol) =>
+                      <div key={iCol} onClick = {() => changeSelectedCell(iRow, iCol) }  className={"z-40 w-8 h-8 flex justify-center items-center bg-transparent cursor-default "  } >
+                        {digit !==0 && <p className={ getCellTextStyle(iRow, iCol)}> {digit} </p>}
+                      </div>
+                    
+                      )}
+                  </div>)
+                }
+              </div>
+          
+          {/* fireworks gif for winning */}
+          {showGif && <div className=" absolute">
+            <img src="/sudoku/fireworks.gif" alt="" />
+          </div>}
+          </div>
+          </div>
         
         {/* Game info and features  */}
         <div className=" ml-14">
-          <h1 className=" mb-6"> Mistakes: { mistakes } </h1>
+          <h1 className=" mt-6 mb-6"> Mistakes: { mistakes } </h1>
           <h1> Difficulty: {difficulty} </h1>
           
           <div className=" flex flex-col justify-center">
@@ -305,8 +325,9 @@ function Sudoku() {
           </div>
         </div>
       </div>
+
+      {/* testing code */}
       <button onClick={solve}> Solve </button>
-      {won && <h1> You won </h1>}
     </div>
   )
 }
