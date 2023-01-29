@@ -5,6 +5,7 @@ function Sudoku() {
   const ref = useRef(null)
   const [board, setBoard] = useState([])
   const [initialBoard, setInitialBoard] = useState([])
+  const [solution , setSolution] = useState([])
   const [selectedCell, setSelectedCell] = useState([0, 0])
   const [difficulty, setDifficulty] = useState('Medium')
   const [mistakes, setMistakes] = useState(0)
@@ -186,6 +187,7 @@ function Sudoku() {
     //create a copy of the matrix
     const newSudokuValue2 = newSudoku.value.map(row => row.map(digit => digit))
     setBoard(newSudokuValue2)
+    setSolution(newSudoku.solution)
   }
 
   const restart = () => {
@@ -210,7 +212,7 @@ function Sudoku() {
         }
   }, [initialBoard])
   
-  //track mistake when user input new digit
+  //when user input new digit
   useEffect(() => {
     if (board.length === 0) {
       return
@@ -218,6 +220,8 @@ function Sudoku() {
     // get indexes of the modified cell
     const iRow = selectedCell[0]
     const iCol = selectedCell[1]
+
+    //track mistake
     if (board[iRow][iCol] !== 0 && isDuplicate(iRow, iCol)) {
       setMistakes(mistakes + 1)
     }
@@ -234,6 +238,19 @@ function Sudoku() {
     }
     setWon(wonGame)
   }, [board])
+
+
+  //*** testing code */ 
+  const solve = () => {
+    console.log(initialBoard);
+    console.log(board);
+    setBoard(solution)
+  }
+
+
+  //*** testing code */ 
+
+
 
   return (
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className=" min-h-full w-full absolute top-0">
@@ -275,6 +292,7 @@ function Sudoku() {
             </div>
         </div>
         
+        {/* Game info and features  */}
         <div className=" ml-14">
           <h1 className=" mb-6"> Mistakes: { mistakes } </h1>
           <h1> Difficulty: {difficulty} </h1>
@@ -287,14 +305,11 @@ function Sudoku() {
 
             <button onClick={restart} className=" px-4 py-2 mt-7 rounded-sm bg-blue-300"> New game </button>
           </div>
-
-          
-
         </div>
       </div>
-
-      
-      </div>
+      <button onClick={solve}> Solve </button>
+      {won && <h1> You won </h1>}
+    </div>
   )
 }
 
