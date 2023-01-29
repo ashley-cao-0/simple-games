@@ -252,9 +252,9 @@ function Sudoku() {
 
 
   //*** testing code */ 
-  const solve = () => {
-    setBoard(solution)
-  }
+  // const solve = () => {
+  //   setBoard(solution)
+  // }
   //*** testing code */ 
 
 
@@ -327,7 +327,8 @@ function Sudoku() {
       </div>
 
       {/* testing code */}
-      <button onClick={solve}> Solve </button>
+      {/* <button onClick={solve}> Solve </button> */}
+      {/* testing code */}
     </div>
   )
 }
