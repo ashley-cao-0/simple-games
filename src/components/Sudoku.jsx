@@ -185,6 +185,10 @@ function Sudoku() {
     if ('0123456789'.includes(e.key) && !givenDigits[iRow][iCol]) {
       changeDigit(e.key, iRow, iCol)
     }
+    // if user tries to delete a cell
+    else if (e.keyCode === 46) {
+      changeDigit(0, iRow, iCol)
+    }
     //if user is trying to move the selected cell with arrow keys
     else if ([37, 38, 39, 40].includes(e.keyCode)) {
       moveSelectedCell_keyBoard(e.keyCode, iRow, iCol)
