@@ -14,14 +14,14 @@ function Home() {
       img: '/math.jpg',
     },
     {
-      route: '/hangman',
-      description: 'Hangman',
-      img: '/hangman.jpg',
-    },
-    {
       route: '/sudoku',
       description: 'Sudoku',
       img: '/sudoku.jpg',
+    },
+    {
+      route: '/hangman',
+      description: 'Hangman',
+      img: '/hangman.jpg',
     },
     {
       route: '/typingtest',
