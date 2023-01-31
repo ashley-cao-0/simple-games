@@ -280,7 +280,7 @@ function Sudoku() {
     // check if input is valid
     const inRange = [1, 2, 3, 4, 5, 6, 7, 8, 9].includes(digit)
     const isNew = !notedDigits[iRow][iCol].includes(digit)
-    const inLimit = notedDigits[iRow][iCol].length < 7
+    const inLimit = notedDigits[iRow][iCol].length < 5
     const validInput = inRange && isNew && inLimit
 
     if ( validInput ) {
@@ -331,9 +331,9 @@ function Sudoku() {
           <div className=" flex mb-4 bg-violet-100 border border-gray-400 p-2">
             {/* list of noted digit */}
             {currentNotedDigits().map((digit, index) =>
-              <div className=" flex ml-1">
-                <button onClick={() => {changeDigit(digit, selectedCell[0], selectedCell[1])}} className=" px-2 bg-indigo-400"> {digit} </button>
-                <button onClick={() => { delNotedDigit(index) }} className=" bg-gray-700 w-1 text-xs text-transparent font-semibold duration-150 hover:text-white hover:w-3"> x </button>
+              <div className=" flex ml-2">
+                <button onClick={() => {changeDigit(digit, selectedCell[0], selectedCell[1])}} className=" px-2 bg-indigo-300 hover:bg-indigo-400"> {digit} </button>
+                <button onClick={() => { delNotedDigit(index) }} className=" bg-gray-800 w-1 text-xs text-transparent font-semibold duration-150 hover:text-white hover:w-3 hover:bg-gray-700"> x </button>
               </div>
             )}
 
@@ -341,7 +341,7 @@ function Sudoku() {
               <button onClick={startTyping} className=" mx-2 bg-indigo-300 border border-slate-400 rounded-full px-1"> + </button>
               :
               <>
-                <form onSubmit={handleSubmit} className=" ml-1">
+                <form onSubmit={handleSubmit} className=" ml-2">
                   <input autoFocus type="number" value={noteInput} onChange={handleChange} className=" w-6"/>
                 </form>
                 <button onClick={stopTyping} className=" mx-2 bg-violet-400 border border-slate-400 rounded-full px-1"> x </button>
@@ -376,7 +376,7 @@ function Sudoku() {
                 {board.map((row, iRow)=>
                   <div key={iRow} className="flex">
                     {row.map((digit, iCol) =>
-                      <div key={iCol} onClick = {() => changeSelectedCell(iRow, iCol) }  className={"z-40 w-8 h-8 flex justify-center items-center bg-transparent cursor-default "  } >
+                      <div key={iCol} onClick={() => { changeSelectedCell(iRow, iCol); setTyping(false) } }  className={"z-40 w-8 h-8 flex justify-center items-center bg-transparent cursor-default "  } >
                         {digit !==0 && <p className={ getCellTextStyle(iRow, iCol)}> {digit} </p>}
                       </div>
                     
