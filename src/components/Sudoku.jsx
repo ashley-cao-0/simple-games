@@ -2,10 +2,21 @@ import React, {useEffect, useState, useRef} from "react";
 import { getSudoku } from "../apiClient";
 
 function Sudoku() {
+  const matrix3D = []
+  for (let i = 0; i < 9; i++) {
+    matrix3D.push([])
+    for (let j = 0; j < 9; j++) {
+      matrix3D[i].push([])
+    }    
+  }
+
   const ref = useRef(null)
   const [board, setBoard] = useState([])
   const [givenDigits, setGivenDigits] = useState([])
   const [solution , setSolution] = useState([])
+  const [notedDigits , setNotedDigits] = useState(matrix3D)
+  const [noteInput, setNoteInput] = useState('')
+  const [typing, setTyping] = useState(false)
   const [selectedCell, setSelectedCell] = useState([0, 0])
   const [difficulty, setDifficulty] = useState('Medium')
   const [mistakes, setMistakes] = useState(0)
@@ -166,6 +177,9 @@ function Sudoku() {
   }
 
   const handleKeyDown = (e) => {
+    if (typing) {
+      return
+    }
     let iRow = selectedCell[0]
     let iCol = selectedCell[1]
     if ('0123456789'.includes(e.key) && !givenDigits[iRow][iCol]) {
@@ -218,8 +232,7 @@ function Sudoku() {
       return
     }
     // get indexes of the modified cell
-    const iRow = selectedCell[0]
-    const iCol = selectedCell[1]
+    const [iRow, iCol] = selectedCell
 
     //track mistake
     if (board[iRow][iCol] !== 0 && isDuplicate(iRow, iCol)) {
@@ -251,10 +264,52 @@ function Sudoku() {
   }, [won])
 
 
+  const currentNotedDigits = () => {
+    const [iRow, iCol] = selectedCell
+    return notedDigits[iRow][iCol]
+  }
+
+  const handleChange = (e) => {
+    setNoteInput(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const [iRow, iCol] = selectedCell
+    const digit = Number(noteInput)
+    // check if input is valid
+    const inRange = [1, 2, 3, 4, 5, 6, 7, 8, 9].includes(digit)
+    const isNew = !notedDigits[iRow][iCol].includes(digit)
+    const inLimit = notedDigits[iRow][iCol].length < 5
+    const validInput = inRange && isNew && inLimit
+
+    if ( validInput ) {
+      notedDigits[iRow][iCol].push(digit)
+      setNoteInput('')
+    }
+  }
+
+  const startTyping = () => {
+    setTyping(true)
+  }
+
+  const stopTyping = () => {
+    setTyping(false)
+    ref.current.focus()
+  }
+
+  const delNotedDigit = (index) => {
+    const [iRow, iCol] = selectedCell
+    const newNotedDigits = [...notedDigits]
+    newNotedDigits[iRow][iCol].splice(index, 1)
+    setNotedDigits(newNotedDigits)
+ }
+
   //*** testing code */ 
   // const solve = () => {
   //   setBoard(solution)
   // }
+
   //*** testing code */ 
 
 
@@ -263,10 +318,36 @@ function Sudoku() {
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className=" min-h-full w-full absolute top-0">
       {/* content wraper */}
       <div className=" flex justify-center mt-24">
-        <div className=" flex flex-col items-center">
-          <div className=" h-7">
-            {won && <h1> Completed! </h1>}
+        <div className=" flex flex-col">
+
+          {/* winning message */}
+          <div className=" h-10 text-center">
+            {won && <h1 className=" text-2xl"> Completed! </h1>}
           </div>
+
+          {/* user noted digit for current cell */}
+          <h1> Noted digits: </h1> 
+          <div className=" flex mb-4 bg-violet-100 border border-gray-400 p-2">
+            {/* list of noted digit */}
+            {currentNotedDigits().map((digit, index) =>
+              <div className=" flex ml-2">
+                <button onClick={() => {changeDigit(digit, selectedCell[0], selectedCell[1])}} className=" px-2 bg-indigo-300 hover:bg-indigo-400"> {digit} </button>
+                <button onClick={() => { delNotedDigit(index) }} className=" bg-gray-800 w-1 text-xs text-transparent font-semibold duration-150 hover:text-white hover:w-3 hover:bg-gray-700"> x </button>
+              </div>
+            )}
+
+            {!typing ? 
+              <button onClick={startTyping} className=" mx-2 bg-indigo-300 border border-slate-400 rounded-full px-1"> + </button>
+              :
+              <>
+                <form onSubmit={handleSubmit} className=" ml-2">
+                  <input autoFocus type="number" value={noteInput} onChange={handleChange} className=" w-6"/>
+                </form>
+                <button onClick={stopTyping} className=" mx-2 bg-violet-400 border border-slate-400 rounded-full px-1"> x </button>
+              </>
+          }
+          </div>
+           
         
           {/* Whole sudoku board */}
           <div className=" relative flex w-72 h-72 bg-white">
@@ -294,7 +375,7 @@ function Sudoku() {
                 {board.map((row, iRow)=>
                   <div key={iRow} className="flex">
                     {row.map((digit, iCol) =>
-                      <div key={iCol} onClick = {() => changeSelectedCell(iRow, iCol) }  className={"z-40 w-8 h-8 flex justify-center items-center bg-transparent cursor-default "  } >
+                      <div key={iCol} onClick={() => { changeSelectedCell(iRow, iCol); setTyping(false) } }  className={"z-40 w-8 h-8 flex justify-center items-center bg-transparent cursor-default "  } >
                         {digit !==0 && <p className={ getCellTextStyle(iRow, iCol)}> {digit} </p>}
                       </div>
                     
@@ -304,24 +385,25 @@ function Sudoku() {
               </div>
           
           {/* fireworks gif for winning */}
-          {showGif && <div className=" absolute">
-            <img src="/sudoku/fireworks.gif" alt="" />
-          </div>}
+            {showGif && 
+            <div className=" absolute">
+              <img src="/sudoku/fireworks.gif" alt="" />
+            </div>}
           </div>
-          </div>
+        </div>
         
         {/* Game info and features  */}
-        <div className=" ml-14">
-          <h1 className=" mt-6 mb-6"> Mistakes: { mistakes } </h1>
+        <div className=" ml-14 mt-24">
+          <h1 className=" mt-6 mb-4"> Mistakes: { mistakes } </h1>
           <h1> Difficulty: {difficulty} </h1>
           
           <div className=" flex flex-col justify-center">
             <div className=" flex">
-              <button onClick={() => setDifficulty('Medium')} className=" px-4 py-2 my-2 rounded-sm bg-rose-300"> Medium </button>
-              <button onClick={() => setDifficulty('Hard')} className=" px-4 py-2  my-2 ml-4 rounded-sm bg-rose-300"> Hard </button>
+              <button onClick={() => setDifficulty('Medium')} className=" px-4 py-2 my-2 rounded-sm bg-rose-300 hover:bg-rose-400"> Medium </button>
+              <button onClick={() => setDifficulty('Hard')} className=" px-4 py-2  my-2 ml-4 rounded-sm bg-rose-300 hover:bg-rose-400"> Hard </button>
             </div>
 
-            <button onClick={restart} className=" px-4 py-2 mt-7 rounded-sm bg-blue-300"> New game </button>
+            <button onClick={restart} className=" px-4 py-2 mt-5 rounded-sm bg-blue-300 hover:bg-blue-400"> New game </button>
           </div>
         </div>
       </div>
