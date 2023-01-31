@@ -290,7 +290,6 @@ function Sudoku() {
   }
 
   const startTyping = () => {
-    console.log('click +');
     setTyping(true)
   }
 
@@ -307,9 +306,9 @@ function Sudoku() {
  }
 
   //*** testing code */ 
-  const solve = () => {
-    setBoard(solution)
-  }
+  // const solve = () => {
+  //   setBoard(solution)
+  // }
 
   //*** testing code */ 
 
@@ -322,8 +321,8 @@ function Sudoku() {
         <div className=" flex flex-col">
 
           {/* winning message */}
-          <div className=" h-7 text-center">
-            {won && <h1> Completed! </h1>}
+          <div className=" h-10 text-center">
+            {won && <h1 className=" text-2xl"> Completed! </h1>}
           </div>
 
           {/* user noted digit for current cell */}
@@ -394,23 +393,24 @@ function Sudoku() {
         </div>
         
         {/* Game info and features  */}
-        <div className=" ml-14">
-          <h1 className=" mt-6 mb-6"> Mistakes: { mistakes } </h1>
+        <div className=" ml-14 mt-24">
+          <h1 className=" mt-6 mb-4"> Mistakes: { mistakes } </h1>
           <h1> Difficulty: {difficulty} </h1>
           
           <div className=" flex flex-col justify-center">
             <div className=" flex">
-              <button onClick={() => setDifficulty('Medium')} className=" px-4 py-2 my-2 rounded-sm bg-rose-300"> Medium </button>
-              <button onClick={() => setDifficulty('Hard')} className=" px-4 py-2  my-2 ml-4 rounded-sm bg-rose-300"> Hard </button>
+              <button onClick={() => setDifficulty('Medium')} className=" px-4 py-2 my-2 rounded-sm bg-rose-300 hover:bg-rose-400"> Medium </button>
+              <button onClick={() => setDifficulty('Hard')} className=" px-4 py-2  my-2 ml-4 rounded-sm bg-rose-300 hover:bg-rose-400"> Hard </button>
             </div>
 
-            <button onClick={restart} className=" px-4 py-2 mt-7 rounded-sm bg-blue-300"> New game </button>
+            <button onClick={restart} className=" px-4 py-2 mt-5 rounded-sm bg-blue-300 hover:bg-blue-400"> New game </button>
           </div>
         </div>
       </div>
 
       {/* testing code */}
-      <button onClick={solve}> Solve </button>
+      {/* <button onClick={solve}> Solve </button> */}
+      {/* testing code */}
     </div>
   )
 }
